@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="GMusic.WP._8.Assets.GoogleBranding.Logos.GooglePlay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100" d:DesignWidth="100">
+
+	<Grid>
+		<Path Stretch="Fill" 
+				  Data="F1 M 0,10.208L 0,161.875C 0,167.671 2.28133,171.749 6.5,172.155L 92.112,85.8906L 6.43866,0.199951C 2.9,0.987976 0,4.05063 0,10.208 Z " UseLayoutRounding="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="99.875" Width="53.327">
+			<Path.Fill>
+				<LinearGradientBrush StartPoint="0.500006,0.999994" EndPoint="0.500006,-8.16383e-006">
+					<GradientStop Color="#FF92D3CF" Offset="0"/>
+					<GradientStop Color="#FF147492" Offset="1"/>
+				</LinearGradientBrush>
+			</Path.Fill>
+		</Path>
+		<Path Stretch="Fill" 
+				  Data="F1 M 6.44,0.198608L 92.112,85.8906L 118.879,58.9186C 118.879,58.9186 19.3907,4.63995 13.4347,1.39063L 13.4347,1.39063C 11.7627,0.478638 9.98,0 8.28001,0L 8.28001,0C 7.652,0 7.03599,0.0653076 6.44,0.198608 Z " UseLayoutRounding="False" Margin="3.753,0.063,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="49.772" Width="64.82">
+			<Path.Fill>
+				<LinearGradientBrush StartPoint="0.876775,0.854853" EndPoint="2.13765,0.854853">
+					<LinearGradientBrush.RelativeTransform>
+						<TransformGroup>
+							<SkewTransform CenterX="0.876775" CenterY="0.854853" AngleX="15.2395" AngleY="0"/>
+							<RotateTransform CenterX="0.876775" CenterY="0.854853" Angle="233.585"/>
+						</TransformGroup>
+					</LinearGradientBrush.RelativeTransform>
+					<GradientStop Color="#FFE4ECAA" Offset="0"/>
+					<GradientStop Color="#FF47BEBC" Offset="1"/>
+				</LinearGradientBrush>
+			</Path.Fill>
+		</Path>
+		<Path Stretch="Fill" 
+				  Data="F1 M 6.50134,172.155C 8.43467,172.4 10.76,171.888 13.4347,170.424L 13.4347,170.424C 18.972,167.393 78.4387,134.841 118.904,112.693L 92.112,85.8906L 6.50134,172.155 Z " UseLayoutRounding="False" Margin="3.753,49.977,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="49.771" Width="64.819"
+				  >
+			<Path.Fill>
+				<LinearGradientBrush StartPoint="0.872548,0.134699" EndPoint="2.13842,0.134699">
+					<LinearGradientBrush.RelativeTransform>
+						<TransformGroup>
+							<SkewTransform CenterX="0.872548" CenterY="0.134699" AngleX="-14.9182" AngleY="0"/>
+							<RotateTransform CenterX="0.872548" CenterY="0.134699" Angle="125.608"/>
+						</TransformGroup>
+					</LinearGradientBrush.RelativeTransform>
+					<GradientStop Color="#FFE74048" Offset="0"/>
+					<GradientStop Color="#FF7F50A0" Offset="1"/>
+				</LinearGradientBrush>
+			</Path.Fill>
+		</Path>
+		<Path Stretch="Fill" 
+			  Data="F1 M 92.1133,85.8906L 118.904,112.697C 139.287,101.541 154.855,93.0187 156.269,92.2427L 156.269,92.2427C 160.493,89.9307 164.919,84.032 156.269,79.316L 156.269,79.316C 153.489,77.7946 138.341,69.5359 118.88,58.9186L 92.1133,85.8906 Z " UseLayoutRounding="False" Margin="53.045,34.209,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="31.252" Width="39.933" 
+			  >
+			<Path.Fill>
+				<LinearGradientBrush StartPoint="0.638111,0.835952" EndPoint="1.49229,0.835952">
+					<LinearGradientBrush.RelativeTransform>
+						<TransformGroup>
+							<SkewTransform CenterX="0.638111" CenterY="0.835952" AngleX="11.5938" AngleY="0"/>
+							<RotateTransform CenterX="0.638111" CenterY="0.835952" Angle="248.375"/>
+						</TransformGroup>
+					</LinearGradientBrush.RelativeTransform>
+					<GradientStop Color="#FFFCD08F" Offset="0"/>
+					<GradientStop Color="#FFF69674" Offset="1"/>
+				</LinearGradientBrush>
+			</Path.Fill>
+		</Path>
+	</Grid>
+</UserControl>

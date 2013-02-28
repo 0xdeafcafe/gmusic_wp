@@ -60,9 +60,9 @@ namespace GMusic.API
         {
             var fields = new Dictionary<String, String>
             {
-                {"service", "sj"},
-                {"Email",  email},
-                {"Passwd", password},
+                { "service", "sj" },
+                { "Email",  email },
+                { "Passwd", password },
             };
 
 			var form = new FormBuilder();
