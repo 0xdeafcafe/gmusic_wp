@@ -13,9 +13,128 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="False">
+	<phone:PhoneApplicationPage.Resources>
+		<Storyboard x:Name="PendingAnimation" RepeatBehavior="Forever">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PendingPanel">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0.4"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Name="StartPendingAnimation">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="PendingMask">
+				<DiscreteObjectKeyFrame KeyTime="0">
+					<DiscreteObjectKeyFrame.Value>
+						<Visibility>Visible</Visibility>
+					</DiscreteObjectKeyFrame.Value>
+				</DiscreteObjectKeyFrame>
+			</ObjectAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PendingMask">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="0.273" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="0.273" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="163.959" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="-384.471" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="0.273" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="0.273" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="130.202" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="-297.293" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="0.273" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="path2" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="0.273" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="path2" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="130.746" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path2" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="-471.37" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path2" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="0.273" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="path3" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="0.273" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="path3" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="1.053" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path3" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" To="-383.734" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path3" d:IsOptimized="True"/>
+		</Storyboard>
+		<Storyboard x:Name="EndPendingAnimation">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="PendingMask">
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.6">
+					<DiscreteObjectKeyFrame.Value>
+						<Visibility>Visible</Visibility>
+					</DiscreteObjectKeyFrame.Value>
+				</DiscreteObjectKeyFrame>
+				<DiscreteObjectKeyFrame KeyTime="0:0:1">
+					<DiscreteObjectKeyFrame.Value>
+						<Visibility>Collapsed</Visibility>
+					</DiscreteObjectKeyFrame.Value>
+				</DiscreteObjectKeyFrame>
+			</ObjectAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PendingMask">
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="path">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.273"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="path">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.273"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path">
+				<SplineDoubleKeyFrame KeyTime="0" Value="163.959"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path">
+				<SplineDoubleKeyFrame KeyTime="0" Value="-384.471"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="path1">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.273"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="path1">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.273"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path1">
+				<SplineDoubleKeyFrame KeyTime="0" Value="130.202"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path1">
+				<SplineDoubleKeyFrame KeyTime="0" Value="-297.293"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="path2">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.273"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="path2">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.273"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path2">
+				<SplineDoubleKeyFrame KeyTime="0" Value="130.746"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path2">
+				<SplineDoubleKeyFrame KeyTime="0" Value="-471.37"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="path3">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.273"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="path3">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.273"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path3">
+				<SplineDoubleKeyFrame KeyTime="0" Value="1.053"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path3">
+				<SplineDoubleKeyFrame KeyTime="0" Value="-383.734"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</phone:PhoneApplicationPage.Resources>
 
 	<!--LayoutRoot is the root grid where all page content is placed-->
-	<Grid x:Name="LayoutRoot">
+	<Grid>
 		<Grid.Background>
 			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 				<GradientStop Color="#FFF1F1F1" Offset="1"/>
@@ -27,9 +146,46 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<Grid Grid.RowSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-			<Path Stretch="Fill" 
-				  Data="F1 M 0,10.208L 0,161.875C 0,167.671 2.28133,171.749 6.5,172.155L 92.112,85.8906L 6.43866,0.199951C 2.9,0.987976 0,4.05063 0,10.208 Z " UseLayoutRounding="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="737.759" Width="393.917" Margin="-389.585,-397.977,0,-239.782" Opacity="0.688">
+		<!--TitlePanel contains the name of the application and page title-->
+		<StackPanel Grid.Row="0" Margin="12,17,0,20">
+			<TextBlock Text="Welcome to Google Music" Grid.Column="1" Margin="9,0,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF808285" FontSize="36"/>
+			<TextBlock Text="Sign in" Grid.Column="1" Margin="9,0,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF808285" FontSize="48"/>
+		</StackPanel>
+
+		<!--ContentPanel - place additional content here-->
+		<StackPanel Grid.Row="1" Margin="12,0,12,0">
+			<TextBlock Text="Google Play Email:" Foreground="#FF808285" 
+					   Margin="30,20,30,0"/>
+			<TextBox x:Name="txtEmail" Text="xeraxical@gmail.com" 
+					 Margin="30,0,30,0" Height="72"/>
+
+			<TextBlock Text="Password:" Foreground="#FF808285" 
+					   Margin="30,20,30,0"/>
+			<PasswordBox x:Name="txtPass"
+					 Margin="30,0,30,0"/>
+
+			<Button x:Name="btnSignIn" Content="Sign In" Margin="30,30,30,0" Style="{StaticResource ActionButton-LargeOrangina}" Height="90" Click="btnSignIn_Click" />
+		</StackPanel>
+
+		<!--Pending Mask - puts a mask over the page while processes are happening-->
+		<Grid x:Name="PendingMask" Grid.RowSpan="2" Visibility="Collapsed" Opacity="0.0">
+			<Rectangle>
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="#CCF1F1F1" Offset="1"/>
+						<GradientStop Color="#CCE5E5E5"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+		</Grid>
+
+		<!--Pending Panel - contains the Google Play logo for pending animations-->
+		<Grid x:Name="PendingPanel" Grid.RowSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Opacity="0.4">
+			<Path x:Name="path" Stretch="Fill" 
+				Data="F1 M 0,10.208L 0,161.875C 0,167.671 2.28133,171.749 6.5,172.155L 92.112,85.8906L 6.43866,0.199951C 2.9,0.987976 0,4.05063 0,10.208 Z " UseLayoutRounding="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="478.63" Width="255.558" Margin="-59.818,-189.147,-195.74,-189.483" RenderTransformOrigin="0.5,0.5">
+				<Path.RenderTransform>
+					<CompositeTransform/>
+				</Path.RenderTransform>
 				<Path.Fill>
 					<LinearGradientBrush StartPoint="0.500006,0.999994" EndPoint="0.500006,-8.16383e-006">
 						<GradientStop Color="#FF92D3CF" Offset="0"/>
@@ -37,8 +193,11 @@
 					</LinearGradientBrush>
 				</Path.Fill>
 			</Path>
-			<Path Stretch="Fill" 
-				  Data="F1 M 6.44,0.198608L 92.112,85.8906L 118.879,58.9186C 118.879,58.9186 19.3907,4.63995 13.4347,1.39063L 13.4347,1.39063C 11.7627,0.478638 9.98,0 8.28001,0L 8.28001,0C 7.652,0 7.03599,0.0653076 6.44,0.198608 Z " UseLayoutRounding="False" Margin="-362.045,-398.744,-23.768,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="367.657" Width="478.813" Opacity="0.688">
+			<Path x:Name="path1" Stretch="Fill" 
+				Data="F1 M 6.44,0.198608L 92.112,85.8906L 118.879,58.9186C 118.879,58.9186 19.3907,4.63995 13.4347,1.39063L 13.4347,1.39063C 11.7627,0.478638 9.98,0 8.28001,0L 8.28001,0C 7.652,0 7.03599,0.0653076 6.44,0.198608 Z " UseLayoutRounding="False" Margin="-40.897,-189.077,-269.739,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="238.522" Width="310.636" RenderTransformOrigin="0.5,0.5">
+				<Path.RenderTransform>
+					<CompositeTransform/>
+				</Path.RenderTransform>
 				<Path.Fill>
 					<LinearGradientBrush StartPoint="0.876775,0.854853" EndPoint="2.13765,0.854853">
 						<LinearGradientBrush.RelativeTransform>
@@ -52,9 +211,12 @@
 					</LinearGradientBrush>
 				</Path.Fill>
 			</Path>
-			<Path Stretch="Fill" 
-				  Data="F1 M 6.50134,172.155C 8.43467,172.4 10.76,171.888 13.4347,170.424L 13.4347,170.424C 18.972,167.393 78.4387,134.841 118.904,112.693L 92.112,85.8906L 6.50134,172.155 Z " UseLayoutRounding="False" Margin="-364.24,-31.087,-26.157,-240.088" HorizontalAlignment="Left" VerticalAlignment="Top" Height="371.175" Width="483.397" Opacity="0.688"
+			<Path x:Name="path2" Stretch="Fill" 
+				Data="F1 M 6.50134,172.155C 8.43467,172.4 10.76,171.888 13.4347,170.424L 13.4347,170.424C 18.972,167.393 78.4387,134.841 118.904,112.693L 92.112,85.8906L 6.50134,172.155 Z " UseLayoutRounding="False" Margin="-43.132,49.364,-270.478,-190.168" HorizontalAlignment="Left" VerticalAlignment="Top" Height="240.804" Width="313.61" RenderTransformOrigin="0.5,0.5"
 				  >
+				<Path.RenderTransform>
+					<CompositeTransform/>
+				</Path.RenderTransform>
 				<Path.Fill>
 					<LinearGradientBrush StartPoint="0.872548,0.134699" EndPoint="2.13842,0.134699">
 						<LinearGradientBrush.RelativeTransform>
@@ -68,9 +230,12 @@
 					</LinearGradientBrush>
 				</Path.Fill>
 			</Path>
-			<Path Stretch="Fill" 
-			  Data="F1 M 92.1133,85.8906L 118.904,112.697C 139.287,101.541 154.855,93.0187 156.269,92.2427L 156.269,92.2427C 160.493,89.9307 164.919,84.032 156.269,79.316L 156.269,79.316C 153.489,77.7946 138.341,69.5359 118.88,58.9186L 92.1133,85.8906 Z " UseLayoutRounding="False" Margin="3.219,-147.851,-207.465,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="232.631" Width="297.246" Opacity="0.688" 
+			<Path x:Name="path3" Stretch="Fill" 
+				Data="F1 M 92.1133,85.8906L 118.904,112.697C 139.287,101.541 154.855,93.0187 156.269,92.2427L 156.269,92.2427C 160.493,89.9307 164.919,84.032 156.269,79.316L 156.269,79.316C 153.489,77.7946 138.341,69.5359 118.88,58.9186L 92.1133,85.8906 Z " UseLayoutRounding="False" Margin="195.748,-26.307,-388.59,-24.615" HorizontalAlignment="Left" VerticalAlignment="Top" Height="150.922" Width="192.842" RenderTransformOrigin="0.5,0.5" 
 			  >
+				<Path.RenderTransform>
+					<CompositeTransform/>
+				</Path.RenderTransform>
 				<Path.Fill>
 					<LinearGradientBrush StartPoint="0.638111,0.835952" EndPoint="1.49229,0.835952">
 						<LinearGradientBrush.RelativeTransform>
@@ -85,27 +250,6 @@
 				</Path.Fill>
 			</Path>
 		</Grid>
-
-		<!--TitlePanel contains the name of the application and page title-->
-		<StackPanel Grid.Row="0" Margin="12,17,0,20">
-			<TextBlock Text="Welcome to Google Music" Grid.Column="1" Margin="9,0,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF808285" FontSize="36"/>
-			<TextBlock Text="Sign in" Grid.Column="1" Margin="9,0,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF808285" FontSize="48"/>
-		</StackPanel>
-
-		<!--ContentPanel - place additional content here-->
-		<StackPanel Grid.Row="1" Margin="12,0,12,0">
-			<TextBlock Text="Google Play Email:" Foreground="#FF808285" 
-					   Margin="30,20,30,0"/>
-			<TextBox Text="xeraxical@gmail.com" 
-					 Margin="30,0,30,0"/>
-
-			<TextBlock Text="Password:" Foreground="#FF808285" 
-					   Margin="30,20,30,0"/>
-			<PasswordBox
-					 Margin="30,0,30,0"/>
-
-			<Button Content="Sign In" Margin="30,30,30,0" Style="{StaticResource ActionButton-LargeOrangina}" Height="90" />
-		</StackPanel>
 	</Grid>
 
 </phone:PhoneApplicationPage>

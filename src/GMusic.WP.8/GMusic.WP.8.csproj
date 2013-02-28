@@ -169,6 +169,16 @@
       <HintPath>..\packages\WPtoolkit.4.2012.10.30\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GMusic.API\GMusic.API.csproj">
+      <Project>{0CACD01C-5965-446F-AF30-BA24FB71BCFB}</Project>
+      <Name>GMusic.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GMusic.Core\GMusic.Core.csproj">
+      <Project>{F7642C66-B9AC-4259-8601-CC2BB9C2F12E}</Project>
+      <Name>GMusic.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

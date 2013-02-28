@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{a395beeb-cb62-44c9-8315-2a0c67960d68}" Title="GMusic.WP._8" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="GMusic.WP._8 author" Description="Sample description" Publisher="GMusic.WP._8" PublisherID="{723c331f-c90e-44db-ac01-3452941f9499}">
+  <App xmlns="" ProductID="{a395beeb-cb62-44c9-8315-2a0c67960d68}" Title="Google Music" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="GMusic.WP._8 author" Description="A Windows Phone client for Google Music." Publisher="GMusic.WP._8" PublisherID="{723c331f-c90e-44db-ac01-3452941f9499}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />

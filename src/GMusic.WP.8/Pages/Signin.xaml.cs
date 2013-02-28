@@ -1,20 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 
 namespace GMusic.WP._8.Pages
 {
-	public partial class Signin : PhoneApplicationPage
+	public partial class Signin
 	{
 		public Signin()
 		{
 			InitializeComponent();
+		}
+
+		private void btnSignIn_Click(object sender, RoutedEventArgs e)
+		{
+			StartPendingAnimation.Begin();
+			StartPendingAnimation.Completed += (o, args) =>
+				                                   {
+													   PendingAnimation.Begin();
+					                                   var thread = new Thread(() => Dispatcher.BeginInvoke(
+						                                   () =>
+							                                   {
+																   App.ApiManager.Login(txtEmail.Text, txtPass.Password);
+								                                   App.ApiManager.OnLoginComplete(() =>
+									                                                                  {
+																										  PendingAnimation.Stop();
+																										  EndPendingAnimation.Begin();
+									                                                                  });
+							                                   }));
+													   thread.Start();
+				                                   };
 		}
 	}
 }

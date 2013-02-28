@@ -69,7 +69,9 @@ namespace GMusic.API
             form.AddFields(fields);
             form.Close();
 
-            client.UploadDataAsync(new Uri("https://www.google.com/accounts/ClientLogin"), form.ContentType, form.GetBytes(),  GetAuthTokenComplete);
+	        client.UploadDataAsync(new Uri("https://www.google.com/accounts/ClientLogin"), 
+								   form.ContentType,
+	                               form.GetBytes());
         }
 
         public void Login(String authToken)

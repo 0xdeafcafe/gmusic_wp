@@ -1,22 +1,42 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Marketplace;
 using Microsoft.Phone.Shell;
 using GMusic.WP._8.Resources;
+using GMusic.API;
 
 namespace GMusic.WP._8
 {
-	public partial class App : Application
+	public partial class App
 	{
 		/// <summary>
 		/// Provides easy access to the root frame of the Phone Application.
 		/// </summary>
 		/// <returns>The root frame of the Phone Application.</returns>
 		public static PhoneApplicationFrame RootFrame { get; private set; }
+
+		/// <summary>
+		/// The Google Music API Manager Class
+		/// </summary>
+		public static Manager ApiManager;
+
+		/// <summary>
+		/// Provides easy access to wether the application is in Trial mode, or the user splashed out, woop.
+		/// </summary>
+		public static bool IsTrial { get; private set; }
+
+		/// <summary>
+		/// Check the current license information for this application
+		/// </summary>
+		private static void CheckLicense()
+		{
+			IsTrial = new LicenseInformation().IsTrial();
+		}
+
 
 		/// <summary>
 		/// Constructor for the Application object.
@@ -61,12 +81,15 @@ namespace GMusic.WP._8
 		// This code will not execute when the application is reactivated
 		private void Application_Launching(object sender, LaunchingEventArgs e)
 		{
+			CheckLicense();
+			ApiManager = new Manager();
 		}
 
 		// Code to execute when the application is activated (brought to foreground)
 		// This code will not execute when the application is first launched
 		private void Application_Activated(object sender, ActivatedEventArgs e)
 		{
+			CheckLicense();
 		}
 
 		// Code to execute when the application is deactivated (sent to background)
