@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
+using GMusic.WP._8.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Marketplace;
 using Microsoft.Phone.Shell;
@@ -25,6 +26,16 @@ namespace GMusic.WP._8
 		public static Manager ApiManager;
 
 		/// <summary>
+		/// Provides a secure and stable location to store data
+		/// </summary>
+		public static IsolatedStorage IsolatedStorage;
+
+		/// <summary>
+		/// The global view model of the application
+		/// </summary>
+		public static GlobalViewModel ViewModel;
+
+		/// <summary>
 		/// Provides easy access to wether the application is in Trial mode, or the user splashed out, woop.
 		/// </summary>
 		public static bool IsTrial { get; private set; }
@@ -36,7 +47,6 @@ namespace GMusic.WP._8
 		{
 			IsTrial = new LicenseInformation().IsTrial();
 		}
-
 
 		/// <summary>
 		/// Constructor for the Application object.
@@ -75,6 +85,14 @@ namespace GMusic.WP._8
 				PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
 			}
 
+			// Initialize IsolatedStorage
+			IsolatedStorage = new IsolatedStorage();
+
+			// Initialize ApiManager
+			ApiManager = new Manager();
+
+			// Initialize ViewModel
+			ViewModel = new GlobalViewModel();
 		}
 
 		// Code to execute when the application is launching (eg, from Start)
@@ -82,7 +100,6 @@ namespace GMusic.WP._8
 		private void Application_Launching(object sender, LaunchingEventArgs e)
 		{
 			CheckLicense();
-			ApiManager = new Manager();
 		}
 
 		// Code to execute when the application is activated (brought to foreground)

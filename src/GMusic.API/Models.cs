@@ -8,84 +8,79 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace GMusic.API
 {
 	public class Models
 	{
-		[DataContract]
 		public class GoogleMusicSongUrl
 		{
-			[DataMember(Name = "url")]
+			[JsonProperty("url")]
 			public String URL { get; set; }
 		};
 
 
-		[DataContract]
 		public class AddPlaylistResp
 		{
-			[DataMember(Name = "id")]
+			[JsonProperty("id")]
 			public String ID { get; set; }
 
 
-			[DataMember(Name = "title")]
+			[JsonProperty("title")]
 			public String Title { get; set; }
 
 
-			[DataMember(Name = "success")]
+			[JsonProperty("success")]
 			public bool Success { get; set; }
 		}
 
 
-		[DataContract]
 		public class DeletePlaylistResp
 		{
-			[DataMember(Name = "deleteId")]
+			[JsonProperty("deleteId")]
 			public String ID { get; set; }
 		}
 
 
-		[DataContract]
 		public class GoogleMusicPlaylists
 		{
-			[DataMember(Name = "playlists")]
+			[JsonProperty("playlists")]
 			public List<GoogleMusicPlaylist> UserPlaylists { get; set; }
 
 
-			[DataMember(Name = "magicPlaylists")]
+			[JsonProperty("magicPlaylists")]
 			public List<GoogleMusicPlaylist> InstantMixes { get; set; }
 		}
 
 
-		[DataContract]
-		public abstract class GoogleMusicPlaylist
+		public class GoogleMusicPlaylist
 		{
-			[DataMember(Name = "title")]
+			[JsonProperty("title")]
 			public string Title { get; set; }
 
 
-			[DataMember(Name = "playlistId")]
+			[JsonProperty("playlistId")]
 			public string PlaylistId { get; set; }
 
 
-			[DataMember(Name = "requestTime")]
+			[JsonProperty("requestTime")]
 			public double RequestTime { get; set; }
 
 
-			[DataMember(Name = "continuationToken")]
+			[JsonProperty("continuationToken")]
 			public string ContToken { get; set; }
 
 
-			[DataMember(Name = "differentialUpdate")]
+			[JsonProperty("differentialUpdate")]
 			public bool DiffUpdate { get; set; }
 
 
-			[DataMember(Name = "playlist")]
+			[JsonProperty("playlist")]
 			public List<GoogleMusicSong> Songs { get; set; }
 
 
-			[DataMember(Name = "continuation")]
+			[JsonProperty("continuation")]
 			public bool Cont { get; set; }
 
 
@@ -96,124 +91,123 @@ namespace GMusic.API
 		}
 
 
-		[DataContract]
-		public abstract class GoogleMusicSong
+		public class GoogleMusicSong
 		{
 			string albumart;
 
-			[DataMember(Name = "genre")]
+			[JsonProperty("genre")]
 			public string Genre { get; set; }
 
 
-			[DataMember(Name = "beatsPerMinute")]
+			[JsonProperty("beatsPerMinute")]
 			public int BPM { get; set; }
 
 
-			[DataMember(Name = "albumArtistNorm")]
+			[JsonProperty("albumArtistNorm")]
 			public string AlbumArtistNorm { get; set; }
 
 
-			[DataMember(Name = "artistNorm")]
+			[JsonProperty("artistNorm")]
 			public string ArtistNorm { get; set; }
 
 
-			[DataMember(Name = "album")]
+			[JsonProperty("album")]
 			public string Album { get; set; }
 
 
-			[DataMember(Name = "lastPlayed")]
+			[JsonProperty("lastPlayed")]
 			public double LastPlayed { get; set; }
 
 
-			[DataMember(Name = "type")]
+			[JsonProperty("type")]
 			public int Type { get; set; }
 
 
-			[DataMember(Name = "disc")]
+			[JsonProperty("disc")]
 			public int Disc { get; set; }
 
 
-			[DataMember(Name = "id")]
+			[JsonProperty("id")]
 			public string ID { get; set; }
 
 
-			[DataMember(Name = "composer")]
+			[JsonProperty("composer")]
 			public string Composer { get; set; }
 
 
-			[DataMember(Name = "title")]
+			[JsonProperty("title")]
 			public string Title { get; set; }
 
 
-			[DataMember(Name = "albumArtist")]
+			[JsonProperty("albumArtist")]
 			public string AlbumArtist { get; set; }
 
 
-			[DataMember(Name = "totalTracks")]
+			[JsonProperty("totalTracks")]
 			public int TotalTracks { get; set; }
 
 
-			[DataMember(Name = "name")]
+			[JsonProperty("name")]
 			public string Name { get; set; }
 
 
-			[DataMember(Name = "totalDiscs")]
+			[JsonProperty("totalDiscs")]
 			public int TotalDiscs { get; set; }
 
 
-			[DataMember(Name = "year")]
+			[JsonProperty("year")]
 			public int Year { get; set; }
 
 
-			[DataMember(Name = "titleNorm")]
+			[JsonProperty("titleNorm")]
 			public string TitleNorm { get; set; }
 
 
-			[DataMember(Name = "artist")]
+			[JsonProperty("artist")]
 			public string Artist { get; set; }
 
 
-			[DataMember(Name = "albumNorm")]
+			[JsonProperty("albumNorm")]
 			public string AlbumNorm { get; set; }
 
 
-			[DataMember(Name = "track")]
+			[JsonProperty("track")]
 			public int Track { get; set; }
 
 
-			[DataMember(Name = "durationMillis")]
+			[JsonProperty("durationMillis")]
 			public long Duration { get; set; }
 
 
-			[DataMember(Name = "albumArt")]
+			[JsonProperty("albumArt")]
 			public string AlbumArt { get; set; }
 
 
-			[DataMember(Name = "deleted")]
+			[JsonProperty("deleted")]
 			public bool Deleted { get; set; }
 
 
-			[DataMember(Name = "url")]
+			[JsonProperty("url")]
 			public string URL { get; set; }
 
 
-			[DataMember(Name = "creationDate")]
+			[JsonProperty("creationDate")]
 			public float CreationDate { get; set; }
 
 
-			[DataMember(Name = "playCount")]
+			[JsonProperty("playCount")]
 			public int Playcount { get; set; }
 
 
-			[DataMember(Name = "rating")]
+			[JsonProperty("rating")]
 			public int Rating { get; set; }
 
 
-			[DataMember(Name = "comment")]
+			[JsonProperty("comment")]
 			public string Comment { get; set; }
 
 
-			[DataMember(Name = "albumArtUrl")]
+			[JsonProperty("albumArtUrl")]
 			public string ArtURL
 			{
 				get
