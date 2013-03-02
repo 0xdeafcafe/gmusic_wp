@@ -69,7 +69,7 @@ namespace GMusic.WP._8
 			if (Debugger.IsAttached)
 			{
 				// Display the current frame rate counters.
-				Application.Current.Host.Settings.EnableFrameRateCounter = true;
+				Current.Host.Settings.EnableFrameRateCounter = true;
 
 				// Show the areas of the app that are being redrawn in each frame.
 				//Application.Current.Host.Settings.EnableRedrawRegions = true;
@@ -85,6 +85,9 @@ namespace GMusic.WP._8
 				PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
 			}
 
+			// Setup event handler on Navigation
+			RootFrame.Navigating += RootFrame_Navigating;
+
 			// Initialize IsolatedStorage
 			IsolatedStorage = new IsolatedStorage();
 
@@ -93,6 +96,16 @@ namespace GMusic.WP._8
 
 			// Initialize ViewModel
 			ViewModel = new GlobalViewModel();
+		}
+
+		
+		void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+		{
+			if (e.Uri.ToString().Contains("/Pages/Signin.xaml") && IsolatedStorage.GoogleAuthToken != null)
+			{
+				e.Cancel = true;
+				RootFrame.Dispatcher.BeginInvoke(() => RootFrame.Navigate(new Uri("/Pages/LoginSplash.xaml", UriKind.Relative)));
+			}
 		}
 
 		// Code to execute when the application is launching (eg, from Start)
@@ -122,7 +135,7 @@ namespace GMusic.WP._8
 		}
 
 		// Code to execute if a navigation fails
-		private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
+		private static void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
 		{
 			if (Debugger.IsAttached)
 			{

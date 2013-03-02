@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:controlsPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -25,17 +26,17 @@
 							<ColumnDefinition Width="160" />
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
-						
+
 						<Rectangle Margin="0,0,0,0" Grid.ColumnSpan="2">
 							<Rectangle.Fill>
 								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-									<GradientStop Color="#FFE5E5E5" Offset="0.714" />
+									<GradientStop Color="#FFE5E5E5" Offset="0.55" />
 									<GradientStop Color="#FFFFFFFF" Offset="1"/>
 								</LinearGradientBrush>
 							</Rectangle.Fill>
 						</Rectangle>
 
-						<Grid x:Name="PendingAnimation" Grid.Column="0" Margin="40,25,0,0">
+						<Grid x:Name="PendingAnimation" Grid.Column="0" Margin="40,55,0,0">
 							<Path Stretch="Fill" 
 				  Data="F1 M 0,10.208L 0,161.875C 0,167.671 2.28133,171.749 6.5,172.155L 92.112,85.8906L 6.43866,0.199951C 2.9,0.987976 0,4.05063 0,10.208 Z " UseLayoutRounding="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="99.875" Width="53.327">
 								<Path.Fill>
@@ -94,7 +95,7 @@
 							</Path>
 						</Grid>
 
-						<TextBlock Text="google music" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF808285" FontSize="110" Margin="0,-20,0,0" FontFamily="Segoe WP Light" />
+						<TextBlock Text="google music" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF808285" FontSize="150" Margin="0,-20,0,0" FontFamily="Segoe WP Light" />
 					</Grid>
 				</controlsPrimitives:PanningBackgroundLayer>
 
@@ -108,38 +109,106 @@
 
 			</Grid>
 		</ControlTemplate>
-		
+
 		<Style TargetType="phone:PanoramaItem">
 			<Setter Property="Margin" Value="0,150,0,0" />
 			<Setter Property="Foreground" Value="#FF808285" />
 		</Style>
+		<DataTemplate x:Key="PanoramaItemTemplate">
+			<Grid>
+				
+			</Grid>
+		</DataTemplate>
 	</phone:PhoneApplicationPage.Resources>
 
 
 	<!--LayoutRoot contains the root grid where all other page content is placed-->
 	<Grid x:Name="LayoutRoot">
 		<phone:Panorama Template="{StaticResource panoramaTemplate}">
+			<phone:Panorama.Background>
+				<ImageBrush Stretch="None" ImageSource="/Assets/Panorama/DummyBackground.png"/>
+			</phone:Panorama.Background>
 
 			<!--Panorama item one-->
-			<phone:PanoramaItem Header="collection">
-				<Grid/>
+			<phone:PanoramaItem HeaderTemplate="{StaticResource PanoramaItemTemplate}">
+				<ScrollViewer Margin="12,0,0,0">
+					<Grid>
+						<StackPanel>
+							<TextBlock Text="collection" Foreground="#FF808285" FontSize="61" FontFamily="Segoe WP SemiLight" />
+							
+							<StackPanel Margin="0,30,0,0">
+								<Button x:Name="btnMusicCollection" Content="music" Style="{StaticResource HubCollectionButton}" Click="btnMusicCollection_Click" />
+								<Button x:Name="btnPlaylistCollection" Content="playlists" Style="{StaticResource HubCollectionButton}" />
+							</StackPanel>
+						</StackPanel>
+					</Grid>
+				</ScrollViewer>
 			</phone:PanoramaItem>
 
 			<!--Panorama item two-->
-			<phone:PanoramaItem Header="history">
-				<Grid/>
+			<phone:PanoramaItem HeaderTemplate="{StaticResource PanoramaItemTemplate}">
+				<ScrollViewer Margin="12,0,0,0">
+					<Grid>
+						<StackPanel>
+							<TextBlock Text="history" Foreground="#FF808285" FontSize="61" FontFamily="Segoe WP SemiLight" />
+						</StackPanel>
+					</Grid>
+				</ScrollViewer>
 			</phone:PanoramaItem>
 
 			<!--Panorama item three-->
-			<phone:PanoramaItem Header="new">
-				<Grid/>
+			<phone:PanoramaItem HeaderTemplate="{StaticResource PanoramaItemTemplate}">
+				<ScrollViewer Margin="12,0,0,0">
+					<Grid>
+						<TextBlock Text="new" Foreground="#FF808285" FontSize="61" FontFamily="Segoe WP SemiLight" />
+
+						<ItemsControl ItemsSource="{Binding NewSongs}" Margin="0,100,0,0" Padding="0,0,0,20">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Button Width="150" Height="150">
+										<Grid>
+											<Grid>
+												<TextBlock Text="Album Name" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+											</Grid>
+											<Image />
+										</Grid>
+									</Button>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<toolkit:WrapPanel />
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+						</ItemsControl>
+
+					</Grid>
+				</ScrollViewer>
 			</phone:PanoramaItem>
 
 			<!--Panorama item four-->
-			<phone:PanoramaItem Header="idk man">
-				<Grid/>
+			<phone:PanoramaItem HeaderTemplate="{StaticResource PanoramaItemTemplate}">
+				<ScrollViewer Margin="12,0,0,0">
+					<Grid>
+						<StackPanel>
+							<TextBlock Text="idk man" Foreground="#FF808285" FontSize="61" FontFamily="Segoe WP SemiLight" />
+						</StackPanel>
+					</Grid>
+				</ScrollViewer>
 			</phone:PanoramaItem>
 		</phone:Panorama>
 	</Grid>
-	
+
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Opacity="0.5" Mode="Minimized">
+			<shell:ApplicationBarIconButton Text="play music" IconUri="/Assets/AppBar/transport.play.png" />
+
+			<shell:ApplicationBar.MenuItems>
+				<shell:ApplicationBarMenuItem Text="settings" />
+				<shell:ApplicationBarMenuItem Text="sign out" />
+			</shell:ApplicationBar.MenuItems>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
+
 </phone:PhoneApplicationPage>

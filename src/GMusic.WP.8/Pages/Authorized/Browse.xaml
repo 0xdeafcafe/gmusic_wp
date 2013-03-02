@@ -1,0 +1,70 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="GMusic.WP._8.Pages.Authorized.Browse"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:converters="clr-namespace:GMusic.WP._8.Converters"
+    xmlns:telerikDataControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
+	xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives" 
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+	<phone:PhoneApplicationPage.Resources>
+		<!-- Converters -->
+		<converters:IValueBrowseSongSplitArtist x:Key="IValueBrowseSongSplitArtist" />
+		<converters:IValueBrowseSongSplitTitle x:Key="IValueBrowseSongSplitTitle" />
+	</phone:PhoneApplicationPage.Resources>
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot">
+		<Grid.Background>
+			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+				<GradientStop Color="#FFE5E5E5" />
+				<GradientStop Color="#FFFFFFFF" Offset="1"/>
+			</LinearGradientBrush>
+		</Grid.Background>
+		<!--Pivot Control-->
+		<phone:Pivot Title="MUSIC" Foreground="#FF808285">
+			<!--Pivot item one-->
+			<phone:PivotItem Header="songs">
+				<telerikDataControls:RadJumpList x:Name="Songs" IsAsyncBalanceEnabled="True" Margin="10,0,0,0"
+					GroupPickerItemTap="Songs_GroupPickerItemTap">
+					<telerikDataControls:RadJumpList.GroupHeaderTemplate>
+						<DataTemplate>
+							<Border Width="65" Height="65" Background="Green" HorizontalAlignment="Left" Margin="0,15,0,15">
+								<TextBlock FontSize="45" Foreground="White" Text="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,2,2,2" />
+							</Border>
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.GroupHeaderTemplate>
+					<telerikDataControls:RadJumpList.GroupPickerItemsPanel>
+						<ItemsPanelTemplate>
+							<telerikPrimitives:RadWrapPanel Margin="12,12,12,0" ItemWidth="104" ItemHeight="104" />
+						</ItemsPanelTemplate>
+					</telerikDataControls:RadJumpList.GroupPickerItemsPanel>
+					<telerikDataControls:RadJumpList.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Margin="0,10,0,10">
+								<TextBlock Foreground="#FFBBBEC1" FontSize="30" Text="{Binding Converter={StaticResource IValueBrowseSongSplitTitle}}" />
+								<TextBlock Foreground="#FF808285" Text="{Binding Converter={StaticResource IValueBrowseSongSplitArtist}}" />
+							</StackPanel>
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.ItemTemplate>
+					<telerikDataControls:RadJumpList.GroupPickerItemTemplate>
+						<DataTemplate>
+							<Button Content="{Binding}" Style="{StaticResource GroupPickerButtonTemplate}" />
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.GroupPickerItemTemplate>
+
+				</telerikDataControls:RadJumpList>
+			</phone:PivotItem>
+		</phone:Pivot>
+	</Grid>
+
+</phone:PhoneApplicationPage>

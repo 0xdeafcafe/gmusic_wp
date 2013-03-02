@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 
 namespace GMusic.WP._8.Pages.Authorized
 {
-	public partial class MusicHub : PhoneApplicationPage
+	public partial class MusicHub
 	{
 		public MusicHub()
 		{
 			InitializeComponent();
+		}
+
+		private void btnMusicCollection_Click(object sender, RoutedEventArgs e)
+		{
+			NavigationService.Navigate(new Uri("/Pages/Authorized/Browse.xaml", UriKind.Relative));
 		}
 	}
 }

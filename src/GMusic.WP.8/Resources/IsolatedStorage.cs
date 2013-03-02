@@ -4,6 +4,11 @@ namespace GMusic.WP._8.Resources
 {
 	public class IsolatedStorage : IStorage
 	{
+		public IsolatedStorage()
+		{
+			Load();
+		}
+
 		private readonly IsolatedStorageSettings _appSettings = IsolatedStorageSettings.ApplicationSettings;
 
 		private string _googleAuthToken;
