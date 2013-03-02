@@ -9,6 +9,7 @@
 	xmlns:converters="clr-namespace:GMusic.WP._8.Converters"
     xmlns:telerikDataControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
 	xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives" 
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -33,35 +34,73 @@
 		<!--Pivot Control-->
 		<phone:Pivot Title="MUSIC" Foreground="#FF808285">
 			<!--Pivot item one-->
-			<phone:PivotItem Header="songs">
-				<telerikDataControls:RadJumpList x:Name="Songs" IsAsyncBalanceEnabled="True" Margin="10,0,0,0"
-					GroupPickerItemTap="Songs_GroupPickerItemTap">
+			<phone:PivotItem Header="artists">
+				<telerikDataControls:RadJumpList x:Name="Artists" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding AllArtists}"
+					GroupPickerItemTap="Artists_GroupPickerItemTap">
 					<telerikDataControls:RadJumpList.GroupHeaderTemplate>
 						<DataTemplate>
-							<Border Width="65" Height="65" Background="Green" HorizontalAlignment="Left" Margin="0,15,0,15">
-								<TextBlock FontSize="45" Foreground="White" Text="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,2,2,2" />
-							</Border>
-						</DataTemplate>
-					</telerikDataControls:RadJumpList.GroupHeaderTemplate>
-					<telerikDataControls:RadJumpList.GroupPickerItemsPanel>
-						<ItemsPanelTemplate>
-							<telerikPrimitives:RadWrapPanel Margin="12,12,12,0" ItemWidth="104" ItemHeight="104" />
-						</ItemsPanelTemplate>
-					</telerikDataControls:RadJumpList.GroupPickerItemsPanel>
-					<telerikDataControls:RadJumpList.ItemTemplate>
-						<DataTemplate>
-							<StackPanel Margin="0,10,0,10">
-								<TextBlock Foreground="#FFBBBEC1" FontSize="30" Text="{Binding Converter={StaticResource IValueBrowseSongSplitTitle}}" />
-								<TextBlock Foreground="#FF808285" Text="{Binding Converter={StaticResource IValueBrowseSongSplitArtist}}" />
+							<StackPanel HorizontalAlignment="Left" Margin="0,15,0,15" toolkit:TiltEffect.IsTiltEnabled="True">
+								<Border toolkit:TiltEffect.IsTiltEnabled="True" Width="65" Height="65" Background="Green">
+									<TextBlock FontSize="45" Foreground="White" Text="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,2,2,2" />
+								</Border>
 							</StackPanel>
 						</DataTemplate>
+					</telerikDataControls:RadJumpList.GroupHeaderTemplate>
+					<telerikDataControls:RadJumpList.ItemTemplate>
+						<DataTemplate>
+							<Button Margin="0,10,0,10" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}" Click="Button_Click">
+								<StackPanel>
+									<TextBlock Foreground="#FFBBBEC1" FontSize="30" Text="{Binding Artist}" />
+								</StackPanel>
+							</Button>
+						</DataTemplate>
 					</telerikDataControls:RadJumpList.ItemTemplate>
+					<telerikDataControls:RadJumpList.GroupPickerItemsPanel>
+						<ItemsPanelTemplate>
+							<telerikPrimitives:RadWrapPanel Margin="12" ItemWidth="108" ItemHeight="108" />
+						</ItemsPanelTemplate>
+					</telerikDataControls:RadJumpList.GroupPickerItemsPanel>
 					<telerikDataControls:RadJumpList.GroupPickerItemTemplate>
 						<DataTemplate>
 							<Button Content="{Binding}" Style="{StaticResource GroupPickerButtonTemplate}" />
 						</DataTemplate>
 					</telerikDataControls:RadJumpList.GroupPickerItemTemplate>
-
+				</telerikDataControls:RadJumpList>
+			</phone:PivotItem>
+			
+			<!--Pivot item three-->
+			<phone:PivotItem Header="songs">
+				<telerikDataControls:RadJumpList x:Name="Songs" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding AllSongs}"
+					GroupPickerItemTap="Songs_GroupPickerItemTap">
+					<telerikDataControls:RadJumpList.GroupHeaderTemplate>
+						<DataTemplate>
+							<StackPanel HorizontalAlignment="Left" Margin="0,15,0,15" toolkit:TiltEffect.IsTiltEnabled="True">
+								<Border toolkit:TiltEffect.IsTiltEnabled="True" Width="65" Height="65" Background="Green">
+									<TextBlock FontSize="45" Foreground="White" Text="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,2,2,2" />
+								</Border>
+							</StackPanel>
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.GroupHeaderTemplate>
+					<telerikDataControls:RadJumpList.ItemTemplate>
+						<DataTemplate>
+							<Button Margin="0,10,0,10" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}" Click="Button_Click">
+								<StackPanel>
+									<TextBlock Foreground="#FFBBBEC1" FontSize="30" Text="{Binding Title}" />
+									<TextBlock Foreground="#FF808285" Text="{Binding Artist}" />
+								</StackPanel>
+							</Button>
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.ItemTemplate>
+					<telerikDataControls:RadJumpList.GroupPickerItemsPanel>
+						<ItemsPanelTemplate>
+							<telerikPrimitives:RadWrapPanel Margin="12" ItemWidth="108" ItemHeight="108" />
+						</ItemsPanelTemplate>
+					</telerikDataControls:RadJumpList.GroupPickerItemsPanel>
+					<telerikDataControls:RadJumpList.GroupPickerItemTemplate>
+						<DataTemplate>
+							<Button Content="{Binding}" Style="{StaticResource GroupPickerButtonTemplate}" />
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.GroupPickerItemTemplate>
 				</telerikDataControls:RadJumpList>
 			</phone:PivotItem>
 		</phone:Pivot>

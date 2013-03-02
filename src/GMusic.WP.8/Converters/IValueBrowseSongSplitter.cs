@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Data;
-using System.Text.RegularExpressions;
 
 
 namespace GMusic.WP._8.Converters
@@ -9,6 +8,11 @@ namespace GMusic.WP._8.Converters
 	{
 		public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
+			if (((string)value).ToLower().Contains("(i can"))
+			{
+				
+			}
+
 			return ((string)value).Split(new[] { "££$$%%$$££" }, StringSplitOptions.None)[0];
 		}
 

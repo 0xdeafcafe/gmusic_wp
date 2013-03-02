@@ -17,19 +17,67 @@ namespace GMusic.WP._8.ViewModels
 		public ObservableCollection<Models.GoogleMusicSong> AllSongs
 		{
 			get { return _allSongs; }
-			set { _allSongs = value; NotifyPropertyChanged("AllSongs"); Save(); }
-		}
-		public List<AlphaKeyGroup<Models.GoogleMusicSong>> GroupedSongs
-		{
-			get
-			{
-				return AlphaKeyGroup<Models.GoogleMusicSong>.CreateGroups(
-					AllSongs,
-					s => s.Name,
-					true);
-			}
-		} 
+			set 
+			{ 
+				_allSongs = value; 
+				NotifyPropertyChanged("AllSongs"); 
+				Save();
 
+				#region Albums
+				AllAlbums.Clear();
+				foreach(var song in _allSongs)
+				{
+					// Add Artist if it doesn't exist
+					if (!AllAlbums.Any(album => album.Title == song.Album && album.Artist == song.Artist))
+						AllAlbums.Add(new Models.GoogleMusicAlbum() { Title = song.Album, AlbumArt = song.ArtURL, Artist = song.Artist });
+
+					// Add Songs
+					var albumsAvaiable = AllAlbums.First(album => album.Artist == song.Artist && album.Title == song.Album);
+					if (albumsAvaiable.Songs == null)
+						albumsAvaiable.Songs = new List<Models.GoogleMusicSong>();
+					albumsAvaiable.Songs.Add(song);
+				}
+				#endregion
+
+				#region Artists
+				AllArtists.Clear();
+				foreach(var song in _allSongs)
+				{
+					// Add Artist if it doesn't exist
+					if (!AllArtists.Any(artist => artist.Artist == song.Artist))
+						AllArtists.Add(new Models.GoogleMusicArtist { Artist = song.Artist });
+
+					// Add Songs
+					var songsAvaiable = AllArtists.First(artist => artist.Artist == song.Artist);
+					if (songsAvaiable.Songs == null)
+						songsAvaiable.Songs = new List<Models.GoogleMusicSong>();
+					songsAvaiable.Songs.Add(song);
+
+					// Add Albums
+					var albumsAvaiable = AllArtists.First(artist => artist.Artist == song.Artist);
+					if (albumsAvaiable.Albums == null)
+						albumsAvaiable.Albums = new List<Models.GoogleMusicAlbum>();
+					var albumsToAdd = AllAlbums.Where(album => album.Artist == song.Artist && album.Title == song.Album);
+					if (albumsToAdd.Any())
+						albumsAvaiable.Albums.AddRange(albumsToAdd);
+				}
+				#endregion
+			}
+		}
+
+		private ObservableCollection<Models.GoogleMusicArtist> _allArtists = new ObservableCollection<Models.GoogleMusicArtist>();
+		public ObservableCollection<Models.GoogleMusicArtist> AllArtists
+		{
+			get { return _allArtists; }
+			private set { _allArtists = value; NotifyPropertyChanged("AllArtists"); }
+		}
+
+		private ObservableCollection<Models.GoogleMusicAlbum> _allAlbums = new ObservableCollection<Models.GoogleMusicAlbum>();
+		public ObservableCollection<Models.GoogleMusicAlbum> AllAlbums
+		{
+			get { return _allAlbums; }
+			private set { _allAlbums = value; NotifyPropertyChanged("AllAlbums"); }
+		}
 
 		public IList<Models.GoogleMusicSong> NewSongs
 		{

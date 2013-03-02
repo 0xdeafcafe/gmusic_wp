@@ -249,14 +249,16 @@
 			</Setter>
 		</Style>
 
+		
 		<Style x:Key="GroupPickerButtonTemplate" TargetType="Button">
 			<Setter Property="Background" Value="Green"/>
 			<Setter Property="BorderBrush" Value="Transparent"/>
 			<Setter Property="BorderThickness" Value="0"/>
-			<Setter Property="Foreground" Value="#FF808285"/>
+			<Setter Property="Foreground" Value="White"/>
 			<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}" />
-			<Setter Property="FontSize" Value="35" />
+			<Setter Property="FontSize" Value="45" />
 			<Setter Property="Padding" Value="0,5,10,6"/>
+			<Setter Property="Margin" Value="5"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="Button">
@@ -281,8 +283,55 @@
 									</VisualState>
 								</VisualStateGroup>
 							</VisualStateManager.VisualStateGroups>
-							<Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0">
-								<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="Left" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+							<Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="0" 
+									BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+								<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" 
+												Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" 
+												HorizontalContentAlignment="Left" Padding="{TemplateBinding Padding}" 
+												VerticalContentAlignment="Top" Margin="5,25,0,0"/>
+							</Border>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		
+		<Style x:Key="BrowseSongSelectionButton" TargetType="Button">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderBrush" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid Background="Transparent" toolkit:TiltEffect.IsTiltEnabled="True">
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="MouseOver"/>
+									<VisualState x:Name="Pressed" />
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentContainer">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="0" 
+									BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+								<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" 
+												Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" 
+												HorizontalContentAlignment="Left" Padding="{TemplateBinding Padding}" 
+												VerticalContentAlignment="Center" />
 							</Border>
 						</Grid>
 					</ControlTemplate>

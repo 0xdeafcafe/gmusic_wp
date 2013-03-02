@@ -1,6 +1,6 @@
-﻿using GMusic.API;
+﻿using System.Windows.Controls;
+using GMusic.API;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
@@ -17,45 +17,58 @@ namespace GMusic.WP._8.Pages.Authorized
 
 			DataContext = App.ViewModel;
 
-			// don't fucking judge me, faggot.
-			List<string> days = App.ViewModel.AllSongs.Select(song => song.Title + "££$$%%$$££" + song.Artist).ToList();
-			Songs.ItemsSource = days;
-
-			// we do not want async balance since item templates are simple
-			Songs.IsAsyncBalanceEnabled = false;
-
-			// add custom group picker items, including all alphabetic characters
-			List<string> groupPickerItems = new List<string>(32);
-			foreach (char c in alphabet)
+			#region Artists
+			// add grouping and descriptors
+			var sortDescriptorsArtist = new List<DataDescriptor>();
+			var sdArtist = new GenericSortDescriptor<Models.GoogleMusicArtist, char>
 			{
-				groupPickerItems.Add(new string(c, 1));
-			}
-			Songs.GroupPickerItemsSource = groupPickerItems;
+				KeySelector = artist => artist.Artist[0]
+			};
+			sortDescriptorsArtist.Add(sdArtist);
+			Artists.SortDescriptorsSource = sortDescriptorsArtist;
+			Artists.GroupPickerItemsSource = alphabet.Select(c => new string(c, 1)).ToList();
+			Artists.GroupDescriptors.Add(
+				new GenericGroupDescriptor<Models.GoogleMusicArtist, string>(artist => artist.Artist.Substring(0, 1).ToLower()));
+			#endregion
 
-			// hook the GroupPickerItemTap event to provide our custom logic since the jump list does not know how to manipulate our items
-			//Songs.GroupPickerItemTap += this.OnJumpList_GroupPickerItemTap;
-
-			// add the group and sort descriptors
-			GenericGroupDescriptor<string, string> groupByFirstName = new GenericGroupDescriptor<string, string>(contact => contact.Substring(0, 1).ToLower());
-			Songs.GroupDescriptors.Add(groupByFirstName);
-
-			//GenericSortDescriptor<string, string> sort = new GenericSortDescriptor<string, string>(contact => contact);
-			//Songs.SortDescriptors.Add(sort);
+			#region Songs
+			// add grouping and descriptors
+			var sortDescriptorsSong = new List<DataDescriptor>();
+			var sdSong = new GenericSortDescriptor<Models.GoogleMusicSong, char>
+				         {
+					         KeySelector = song => song.Title[0]
+				         };
+			sortDescriptorsSong.Add(sdSong);
+			Songs.SortDescriptorsSource = sortDescriptorsSong;
+			Songs.GroupPickerItemsSource = alphabet.Select(c => new string(c, 1)).ToList();
+			Songs.GroupDescriptors.Add(
+				new GenericGroupDescriptor<Models.GoogleMusicSong, string>(song => song.Title.Substring(0, 1).ToLower()));
+			#endregion
 		}
 
 		private void Songs_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
 		{
-			foreach (DataGroup group in Songs.Groups)
+			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
 			{
-				if (object.Equals(e.DataItem, group.Key))
-				{
-					e.DataItemToNavigate = group;
-					return;
-				}
+				e.DataItemToNavigate = group;
+				return;
 			}
-
 			e.DataItemToNavigate = Songs.Groups[0];
-			return;
+		}
+		private void Artists_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
+		{
+			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
+			{
+				e.DataItemToNavigate = group;
+				return;
+			}
+			e.DataItemToNavigate = Songs.Groups[0];
+		}
+		private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+			var button = ((Button) sender);
+			var datacn = (Models.GoogleMusicSong)button.DataContext;
+			//datacn.Title;
 		}
 	}
 }

@@ -20,7 +20,6 @@ namespace GMusic.API
 			public String URL { get; set; }
 		};
 
-
 		public class AddPlaylistResp
 		{
 			[JsonProperty("id")]
@@ -35,13 +34,11 @@ namespace GMusic.API
 			public bool Success { get; set; }
 		}
 
-
 		public class DeletePlaylistResp
 		{
 			[JsonProperty("deleteId")]
 			public String ID { get; set; }
 		}
-
 
 		public class GoogleMusicPlaylists
 		{
@@ -52,7 +49,6 @@ namespace GMusic.API
 			[JsonProperty("magicPlaylists")]
 			public List<GoogleMusicPlaylist> InstantMixes { get; set; }
 		}
-
 
 		public class GoogleMusicPlaylist
 		{
@@ -89,7 +85,6 @@ namespace GMusic.API
 				get { return Songs.Count + " tracks"; }
 			}
 		}
-
 
 		public class GoogleMusicSong
 		{
@@ -225,6 +220,31 @@ namespace GMusic.API
 					return Artist + ", " + Album;
 				}
 			}
+		}
+		public class GoogleMusicArtist
+		{
+			[JsonProperty("artist")]
+			public string Artist { get; set; }
+
+			[JsonProperty("albums")]
+			public List<GoogleMusicAlbum> Albums { get; set; }
+
+			[JsonProperty("songs")]
+			public List<GoogleMusicSong> Songs { get; set; }
+		}
+		public class GoogleMusicAlbum
+		{
+			[JsonProperty("artist")]
+			public string Artist { get; set; }
+
+			[JsonProperty("title")]
+			public string Title { get; set; }
+
+			[JsonProperty("album_art")]
+			public string AlbumArt { get; set; }
+
+			[JsonProperty("songs")]
+			public List<GoogleMusicSong> Songs { get; set; }
 		}
 	}
 }
