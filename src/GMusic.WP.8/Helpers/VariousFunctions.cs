@@ -28,6 +28,13 @@ namespace GMusic.WP._8.Helpers
 
 			NavigateToPage(Page.ViewGenre, new Dictionary<string, string> { { "viewId", viewId } });
 		}
+		public static void ViewPlaylist(Models.GoogleMusicPlaylist playlist)
+		{
+			var viewId = GenerateRandomViewId();
+			App.ViewModel.SelectedView.Add(viewId, playlist);
+
+			NavigateToPage(Page.ViewPlaylist, new Dictionary<string, string> { { "viewId", viewId } });
+		}
 		public static void TryGoingBack()
 		{
 			MessageBox.Show("There was an unknown error loading the specfied information. Sorry about that.", "Unknown Error",
@@ -59,7 +66,8 @@ namespace GMusic.WP._8.Helpers
 			MusicHub,
 			ViewAlbum,
 			ViewArtist,
-			ViewGenre
+			ViewGenre,
+			ViewPlaylist
 		}
 		public static void NavigateToPage(Page page, Dictionary<string, string> queryStringParams = null)
 		{
@@ -96,6 +104,9 @@ namespace GMusic.WP._8.Helpers
 					break;
 				case Page.ViewGenre:
 					pageFriendly += "Authorized/ViewGenre";
+					break;
+				case Page.ViewPlaylist:
+					pageFriendly += "Authorized/ViewPlaylist";
 					break;
 			}
 			pageFriendly += ".xaml";

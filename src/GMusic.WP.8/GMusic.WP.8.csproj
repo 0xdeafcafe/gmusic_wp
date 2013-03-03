@@ -126,6 +126,9 @@
     <Compile Include="Pages\Authorized\ViewGenre.xaml.cs">
       <DependentUpon>ViewGenre.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Authorized\ViewPlaylist.xaml.cs">
+      <DependentUpon>ViewPlaylist.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LoginSplash.xaml.cs">
       <DependentUpon>LoginSplash.xaml</DependentUpon>
     </Compile>
@@ -223,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Authorized\ViewGenre.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Authorized\ViewPlaylist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

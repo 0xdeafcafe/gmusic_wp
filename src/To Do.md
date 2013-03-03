@@ -7,8 +7,10 @@ for Windows Phone
 
 
 ###User Experience
-- Disable pressing back when the user signed in/updated the cache
+- Disable pressing back when the user signed in/updated the cache.
+- Message when list viewers are empty.
+- Multu-selector colour on light themes (force white)
 
 
 ###Other Errors
-- Authorization checks on going to/from pages when chaning credentials
+- Authorization checks on going to/from pages when chaning credentials.
