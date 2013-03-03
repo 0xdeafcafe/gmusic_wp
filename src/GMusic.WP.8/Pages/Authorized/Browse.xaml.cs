@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using GMusic.API;
+using GMusic.WP._8.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using Telerik.Windows.Controls;
@@ -31,6 +32,20 @@ namespace GMusic.WP._8.Pages.Authorized
 				new GenericGroupDescriptor<Models.GoogleMusicArtist, string>(artist => artist.Artist.Substring(0, 1).ToLower()));
 			#endregion
 
+			#region Albums
+			// add grouping and descriptors
+			var sortDescriptorsAlbum = new List<DataDescriptor>();
+			var sdAlbum = new GenericSortDescriptor<Models.GoogleMusicAlbum, char>
+			{
+				KeySelector = album => album.Title[0]
+			};
+			sortDescriptorsAlbum.Add(sdAlbum);
+			Albums.SortDescriptorsSource = sortDescriptorsAlbum;
+			Albums.GroupPickerItemsSource = alphabet.Select(c => new string(c, 1)).ToList();
+			Albums.GroupDescriptors.Add(
+				new GenericGroupDescriptor<Models.GoogleMusicAlbum, string>(song => song.Title.Substring(0, 1).ToLower()));
+			#endregion
+
 			#region Songs
 			// add grouping and descriptors
 			var sortDescriptorsSong = new List<DataDescriptor>();
@@ -46,7 +61,7 @@ namespace GMusic.WP._8.Pages.Authorized
 			#endregion
 		}
 
-		private void Songs_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
+		private void Song_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
 		{
 			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
 			{
@@ -55,7 +70,16 @@ namespace GMusic.WP._8.Pages.Authorized
 			}
 			e.DataItemToNavigate = Songs.Groups[0];
 		}
-		private void Artists_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
+		private void Artist_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
+		{
+			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
+			{
+				e.DataItemToNavigate = group;
+				return;
+			}
+			e.DataItemToNavigate = Songs.Groups[0];
+		}
+		private void Album_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
 		{
 			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
 			{
@@ -66,9 +90,14 @@ namespace GMusic.WP._8.Pages.Authorized
 		}
 		private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			var button = ((Button) sender);
-			var datacn = (Models.GoogleMusicSong)button.DataContext;
+			//var button = ((Button) sender);
+			//var datacn = (Models.GoogleMusicSong)button.DataContext;
 			//datacn.Title;
+		}
+
+		private void btnViewAlbum_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+			VariousFunctions.ViewAlbum((Models.GoogleMusicAlbum)(((Button)sender).DataContext));
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using GMusic.WP._8.Helpers;
 
 namespace GMusic.WP._8.Pages.Authorized
 {
@@ -13,6 +14,11 @@ namespace GMusic.WP._8.Pages.Authorized
 		private void btnMusicCollection_Click(object sender, RoutedEventArgs e)
 		{
 			NavigationService.Navigate(new Uri("/Pages/Authorized/Browse.xaml", UriKind.Relative));
+		}
+
+		private void btnAbout_Click(object sender, EventArgs e)
+		{
+			VariousFunctions.NavigateToPage(VariousFunctions.Page.About);
 		}
 	}
 }

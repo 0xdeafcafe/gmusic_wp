@@ -99,13 +99,23 @@
       <DependentUpon>GooglePlay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\IValueBrowseSongSplitter.cs" />
+    <Compile Include="Converters\IValueImageConverter.cs" />
+    <Compile Include="Converters\IValueToLowercase.cs" />
+    <Compile Include="Converters\IValueToUppercase.cs" />
     <Compile Include="Helpers\AlphaKeyGroup.cs" />
+    <Compile Include="Helpers\VariousFunctions.cs" />
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Pages\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Authorized\Browse.xaml.cs">
       <DependentUpon>Browse.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Authorized\MusicHub.xaml.cs">
       <DependentUpon>MusicHub.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Authorized\ViewAlbum.xaml.cs">
+      <DependentUpon>ViewAlbum.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\LoginSplash.xaml.cs">
       <DependentUpon>LoginSplash.xaml</DependentUpon>
@@ -146,6 +156,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Panorama\DummyBackground.png" />
+    <Content Include="Assets\Placeholder\unnamed.jpg" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -178,11 +189,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Authorized\Browse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Authorized\MusicHub.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Authorized\ViewAlbum.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

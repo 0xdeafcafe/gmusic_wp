@@ -23,45 +23,38 @@ namespace GMusic.WP._8.ViewModels
 				NotifyPropertyChanged("AllSongs"); 
 				Save();
 
-				#region Albums
 				AllAlbums.Clear();
-				foreach(var song in _allSongs)
+				foreach (var song in _allSongs.Where(song => !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim())))
 				{
+					#region Albums
 					// Add Artist if it doesn't exist
 					if (!AllAlbums.Any(album => album.Title == song.Album && album.Artist == song.Artist))
-						AllAlbums.Add(new Models.GoogleMusicAlbum() { Title = song.Album, AlbumArt = song.ArtURL, Artist = song.Artist });
+						AllAlbums.Add(new Models.GoogleMusicAlbum() {Title = song.Album, AlbumArt = song.ArtURL, Artist = song.Artist});
 
 					// Add Songs
-					var albumsAvaiable = AllAlbums.First(album => album.Artist == song.Artist && album.Title == song.Album);
-					if (albumsAvaiable.Songs == null)
-						albumsAvaiable.Songs = new List<Models.GoogleMusicSong>();
-					albumsAvaiable.Songs.Add(song);
-				}
-				#endregion
+					var albumAvaiable = AllAlbums.First(album => album.Artist == song.Artist && album.Title == song.Album);
+					if (albumAvaiable.Songs == null) albumAvaiable.Songs = new List<Models.GoogleMusicSong>();
+					albumAvaiable.Songs.Add(song);
+					#endregion
 
-				#region Artists
-				AllArtists.Clear();
-				foreach(var song in _allSongs)
-				{
+					#region Artists
 					// Add Artist if it doesn't exist
-					if (!AllArtists.Any(artist => artist.Artist == song.Artist))
+					if (AllArtists.All(artist => artist.Artist != song.Artist))
 						AllArtists.Add(new Models.GoogleMusicArtist { Artist = song.Artist });
 
 					// Add Songs
 					var songsAvaiable = AllArtists.First(artist => artist.Artist == song.Artist);
-					if (songsAvaiable.Songs == null)
-						songsAvaiable.Songs = new List<Models.GoogleMusicSong>();
-					songsAvaiable.Songs.Add(song);
+					if (songsAvaiable.Songs == null) songsAvaiable.Songs = new List<Models.GoogleMusicSong>();
+					if (!String.IsNullOrEmpty(song.Title.Trim()))
+						songsAvaiable.Songs.Add(song);
 
 					// Add Albums
 					var albumsAvaiable = AllArtists.First(artist => artist.Artist == song.Artist);
-					if (albumsAvaiable.Albums == null)
-						albumsAvaiable.Albums = new List<Models.GoogleMusicAlbum>();
-					var albumsToAdd = AllAlbums.Where(album => album.Artist == song.Artist && album.Title == song.Album);
-					if (albumsToAdd.Any())
-						albumsAvaiable.Albums.AddRange(albumsToAdd);
+					if (albumsAvaiable.Albums == null) albumsAvaiable.Albums = new List<Models.GoogleMusicAlbum>();
+					var albumsToAdd = AllAlbums.Where(album => album.Artist == song.Artist && album.Title == song.Album && !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim()));
+					if (albumsToAdd.Any()) albumsAvaiable.Albums.AddRange(albumsToAdd);
+					#endregion
 				}
-				#endregion
 			}
 		}
 
@@ -99,6 +92,20 @@ namespace GMusic.WP._8.ViewModels
 		{
 			get { return _playlists; }
 			set { _playlists = value; NotifyPropertyChanged("Playlists"); Save(); }
+		}
+
+		private Models.GoogleMusicAlbum _selectedAlbum;
+		public Models.GoogleMusicAlbum SelectedAlbum
+		{
+			get
+			{
+				return _selectedAlbum;
+			}
+			set 
+			{ 
+				_selectedAlbum = value; 
+				NotifyPropertyChanged("SelectedAlbum"); 
+			}
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

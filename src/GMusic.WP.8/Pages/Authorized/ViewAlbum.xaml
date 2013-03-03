@@ -1,0 +1,82 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="GMusic.WP._8.Pages.Authorized.ViewAlbum"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:GMusic.WP._8.Converters"
+    xmlns:telerikDataControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
+	xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives" 
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+	<phone:PhoneApplicationPage.Resources>
+		<!-- Converters -->
+		<converters:IValueToLowercase x:Key="IValueToLowercase" />
+		<converters:IValueToUppercase x:Key="IValueToUppercase" />
+		<converters:IValueImageConverter x:Key="IValueImageConverter" />
+	</phone:PhoneApplicationPage.Resources>
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot">
+		<Grid.Background>
+			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+				<GradientStop Color="#FF333333" />
+				<GradientStop Color="#FF3C3C3C" Offset="1"/>
+			</LinearGradientBrush>
+		</Grid.Background>
+		<!--Pivot Control-->
+		<phone:Pivot Foreground="White" Title="{Binding Path=Title, Converter={StaticResource IValueToUppercase}}">
+            <!--Pivot item one-->
+            <phone:PivotItem Header="songs">
+				<ScrollViewer Margin="12,0,0,0">
+					<StackPanel>
+						<Grid Height="175">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="175" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0" Text="?" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="96" />
+							<Image Grid.Column="0" Width="175" Height="175" Source="{Binding Path=AlbumArt, Converter={StaticResource IValueImageConverter}}" Stretch="UniformToFill" />
+							
+							<StackPanel Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Top">
+								<TextBlock Foreground="White" Margin="0,-12,0,0" FontSize="35" Text="{Binding Title}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Title} -->
+								<TextBlock Foreground="White" FontSize="20" Text="{Binding Artist}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Artist} -->
+							</StackPanel>
+						</Grid>
+						<phone:LongListSelector Margin="0,20,0,0" ItemsSource="{Binding Songs}">
+							<phone:LongListSelector.ItemTemplate>
+								<DataTemplate>
+									<Grid>
+										<Grid Margin="0,5,0,5">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="75" />
+												<ColumnDefinition Width="*" />
+											</Grid.ColumnDefinitions>
+											<Button Grid.Column="0" Margin="-12,0,0,0" Width="75" Height="75" Style="{StaticResource QuickplayButton}" HorizontalAlignment="Left" />
+									
+											<Button Grid.Column="1" Margin="0,5,0,5" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}">
+												<StackPanel>
+													<TextBlock Foreground="White" FontSize="35" Text="{Binding Title}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" />
+													<TextBlock Foreground="#FFadadad" FontSize="18" Text="{Binding Artist}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" />
+													<!-- {Binding Artist} -->
+												</StackPanel>
+											</Button>
+										</Grid>
+									</Grid>
+								</DataTemplate>
+							</phone:LongListSelector.ItemTemplate>
+						</phone:LongListSelector>
+					</StackPanel>
+				</ScrollViewer>
+			</phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+    
+</phone:PhoneApplicationPage>

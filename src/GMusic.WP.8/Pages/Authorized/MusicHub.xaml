@@ -207,6 +207,7 @@
 			<shell:ApplicationBar.MenuItems>
 				<shell:ApplicationBarMenuItem Text="settings" />
 				<shell:ApplicationBarMenuItem Text="sign out" />
+				<shell:ApplicationBarMenuItem x:Name="btnAbout" Text="about" Click="btnAbout_Click" />
 			</shell:ApplicationBar.MenuItems>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>

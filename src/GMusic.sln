@@ -14,6 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{514C6B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMusic.WP.8", "GMusic.WP.8\GMusic.WP.8.csproj", "{A395BEEB-CB62-44C9-8315-2A0C67960D68}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{4B84C285-223A-4F8B-95F9-3ABB2DE0CB7C}"
+	ProjectSection(SolutionItems) = preProject
+		To Do.md = To Do.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
