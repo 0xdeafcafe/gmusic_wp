@@ -99,5 +99,9 @@ namespace GMusic.WP._8.Pages.Authorized
 		{
 			VariousFunctions.ViewAlbum((Models.GoogleMusicAlbum)(((Button)sender).DataContext));
 		}
+		private void btnViewArtist_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+			VariousFunctions.ViewArtist((Models.GoogleMusicArtist)(((Button)sender).DataContext));
+		}
 	}
 }

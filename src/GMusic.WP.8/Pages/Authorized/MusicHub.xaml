@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:converters="clr-namespace:GMusic.WP._8.Converters"
 	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:controlsPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls"
 	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
@@ -17,6 +18,12 @@
     shell:SystemTray.IsVisible="False">
 
 	<phone:PhoneApplicationPage.Resources>
+		<!-- Converters -->
+		<converters:IValueToLowercase x:Key="IValueToLowercase" />
+		<converters:IValueToUppercase x:Key="IValueToUppercase" />
+		<converters:IValueImageConverter x:Key="IValueImageConverter" />
+
+		<!-- Panorama Template -->
 		<ControlTemplate x:Key="panoramaTemplate" TargetType="controls:Panorama">
 			<Grid Background="#FFFFFFFF">
 				<controlsPrimitives:PanningBackgroundLayer x:Name="BackgroundLayer"
@@ -106,7 +113,6 @@
 				<controlsPrimitives:PanningLayer x:Name="ItemsLayer" Grid.Row="1" HorizontalAlignment="Left">
 					<ItemsPresenter x:Name="items"/>
 				</controlsPrimitives:PanningLayer>
-
 			</Grid>
 		</ControlTemplate>
 
@@ -162,15 +168,16 @@
 					<Grid>
 						<TextBlock Text="new" Foreground="#FF808285" FontSize="61" FontFamily="Segoe WP SemiLight" />
 
-						<ItemsControl ItemsSource="{Binding NewSongs}" Margin="0,100,0,0" Padding="0,0,0,20">
+						<ItemsControl ItemsSource="{Binding NewAlbums}" Margin="0,100,0,0">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<Button Width="150" Height="150">
-										<Grid>
-											<Grid>
-												<TextBlock Text="Album Name" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+									<Button x:Name="btnViewAlbum" Width="175" Height="175" Margin="5" Style="{StaticResource EmptyButtonStyle}" Background="#FF333333"
+										HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" Click="btnViewAlbum_Click">
+										<Grid Width="150" Height="150">
+											<Grid VerticalAlignment="Bottom" HorizontalAlignment="Left">
+												<TextBlock Text="{Binding Title}" Margin="0" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Segoe WP" FontSize="20" />
 											</Grid>
-											<Image />
+											<Image Margin="-13" Source="{Binding Path=AlbumArt, Converter={StaticResource IValueImageConverter}}" />
 										</Grid>
 									</Button>
 								</DataTemplate>
@@ -178,11 +185,10 @@
 
 							<ItemsControl.ItemsPanel>
 								<ItemsPanelTemplate>
-									<toolkit:WrapPanel />
+									<toolkit:WrapPanel Margin="0,0,0,40" />
 								</ItemsPanelTemplate>
 							</ItemsControl.ItemsPanel>
 						</ItemsControl>
-
 					</Grid>
 				</ScrollViewer>
 			</phone:PanoramaItem>

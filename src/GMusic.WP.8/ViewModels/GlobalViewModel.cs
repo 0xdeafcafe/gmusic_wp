@@ -5,7 +5,6 @@ using GMusic.API;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using GMusic.WP._8.Helpers;
 using GMusic.WP._8.Resources;
 using Newtonsoft.Json;
 
@@ -23,10 +22,10 @@ namespace GMusic.WP._8.ViewModels
 				NotifyPropertyChanged("AllSongs"); 
 				Save();
 
+				#region Albums
 				AllAlbums.Clear();
 				foreach (var song in _allSongs.Where(song => !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim())))
 				{
-					#region Albums
 					// Add Artist if it doesn't exist
 					if (!AllAlbums.Any(album => album.Title == song.Album && album.Artist == song.Artist))
 						AllAlbums.Add(new Models.GoogleMusicAlbum() {Title = song.Album, AlbumArt = song.ArtURL, Artist = song.Artist});
@@ -35,26 +34,30 @@ namespace GMusic.WP._8.ViewModels
 					var albumAvaiable = AllAlbums.First(album => album.Artist == song.Artist && album.Title == song.Album);
 					if (albumAvaiable.Songs == null) albumAvaiable.Songs = new List<Models.GoogleMusicSong>();
 					albumAvaiable.Songs.Add(song);
-					#endregion
+				}
+				#endregion
 
-					#region Artists
+				#region Artists
+				AllArtists.Clear();
+				foreach (var song in _allSongs.Where(song => !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim())))
+				{
 					// Add Artist if it doesn't exist
-					if (AllArtists.All(artist => artist.Artist != song.Artist))
-						AllArtists.Add(new Models.GoogleMusicArtist { Artist = song.Artist });
+					if (AllArtists.All(artist => artist.Artist.ToLower().Trim() != song.Artist.ToLower().Trim()))
+						AllArtists.Add(new Models.GoogleMusicArtist {Artist = song.Artist});
 
 					// Add Songs
-					var songsAvaiable = AllArtists.First(artist => artist.Artist == song.Artist);
+					var songsAvaiable = AllArtists.First(artist => artist.Artist.ToLower().Trim() == song.Artist.ToLower().Trim());
 					if (songsAvaiable.Songs == null) songsAvaiable.Songs = new List<Models.GoogleMusicSong>();
 					if (!String.IsNullOrEmpty(song.Title.Trim()))
 						songsAvaiable.Songs.Add(song);
-
-					// Add Albums
-					var albumsAvaiable = AllArtists.First(artist => artist.Artist == song.Artist);
-					if (albumsAvaiable.Albums == null) albumsAvaiable.Albums = new List<Models.GoogleMusicAlbum>();
-					var albumsToAdd = AllAlbums.Where(album => album.Artist == song.Artist && album.Title == song.Album && !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim()));
-					if (albumsToAdd.Any()) albumsAvaiable.Albums.AddRange(albumsToAdd);
-					#endregion
 				}
+				foreach(var artist in _allArtists)
+					foreach(var album in _allAlbums.Where(album => album.Artist.ToLower().Trim() == artist.Artist.ToLower().Trim()))
+					{
+						if (artist.Albums == null) artist.Albums = new List<Models.GoogleMusicAlbum>();
+						artist.Albums.Add(album);
+					}
+				#endregion
 			}
 		}
 
@@ -72,11 +75,11 @@ namespace GMusic.WP._8.ViewModels
 			private set { _allAlbums = value; NotifyPropertyChanged("AllAlbums"); }
 		}
 
-		public IList<Models.GoogleMusicSong> NewSongs
+		public IList<Models.GoogleMusicAlbum> NewAlbums
 		{
 			get
 			{
-				return _allSongs.OrderBy(song => song.CreationDate).Take(30).ToList();
+				return _allAlbums.OrderBy(album => album.Songs[0].CreationDate).Take(30).ToList();
 			}
 		}
 		public IList<Models.GoogleMusicSong> RecentPlayed
@@ -107,6 +110,30 @@ namespace GMusic.WP._8.ViewModels
 				NotifyPropertyChanged("SelectedAlbum"); 
 			}
 		}
+		private Models.GoogleMusicArtist _selectedArtist;
+		public Models.GoogleMusicArtist SelectedArtist
+		{
+			get
+			{
+				return _selectedArtist;
+			}
+			set
+			{
+				_selectedArtist = value;
+				NotifyPropertyChanged("SelectedArtist");
+			}
+		}
+
+		private Dictionary<string, object> _selectedView = new Dictionary<string, object>();
+		public Dictionary<string, object> SelectedView
+		{
+			get { return _selectedView; }
+			set
+			{
+				_selectedView = value;
+				NotifyPropertyChanged("SelectedView");
+			}
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void NotifyPropertyChanged(String info)
@@ -115,6 +142,13 @@ namespace GMusic.WP._8.ViewModels
 				PropertyChanged(this, new PropertyChangedEventArgs(info));
 		}
 
+		#region Functions
+		public Models.GoogleMusicArtist GetArtistFromString(string artistString)
+		{
+			return _allArtists.FirstOrDefault(artistT => artistT.Artist.ToString().ToLower().Trim() == artistString.ToLower().Trim());
+		}
+
+		#endregion
 
 		#region Storage
 		private readonly IsolatedStorageSettings _appSettings = IsolatedStorageSettings.ApplicationSettings;

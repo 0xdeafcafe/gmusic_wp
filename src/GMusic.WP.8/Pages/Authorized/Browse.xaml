@@ -65,7 +65,7 @@
 								</Grid.ColumnDefinitions>
 								<Button Grid.Column="0" Margin="-12,0,0,0" Width="75" Height="75" Style="{StaticResource QuickplayButton}" HorizontalAlignment="Left" />
 									
-								<Button Grid.Column="1" Margin="0,5,0,5" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}" Click="Button_Click">
+								<Button x:Name="btnViewArtist" Grid.Column="1" Margin="0,5,0,5" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}" Click="btnViewArtist_Click">
 									<TextBlock Foreground="White" FontSize="35" Text="{Binding Artist}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Artist} -->
 								</Button>
 							</Grid>
@@ -83,25 +83,25 @@
 					GroupPickerItemTemplate="{StaticResource CustomGroupPickerButtonTemplate}">
 					<telerikDataControls:RadJumpList.ItemTemplate>
 						<DataTemplate>
-								<Grid Margin="0,10,0,10">
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="175" />
-										<ColumnDefinition Width="*" />
-									</Grid.ColumnDefinitions>
-									<Grid Grid.Column="0" Height="175" Width="175">
-										<TextBlock Text="?" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="96" />
+							<Grid Margin="0,10,0,10">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="175" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Grid Grid.Column="0" Height="175" Width="175">
+									<TextBlock Text="?" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="96" />
 
-										<Image Source="{Binding Path=AlbumArt, Converter={StaticResource IValueImageConverter}}" />
-										<Button Style="{StaticResource QuickplayButtonSmall}" Width="40" Height="40" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
-									</Grid>
-									
-									<Button x:Name="btnViewAlbum" Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}" Click="btnViewAlbum_Click">
-										<StackPanel>
-											<TextBlock Foreground="White" Margin="0,-12,0,0" FontSize="35" Text="{Binding Title}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Title} -->
-											<TextBlock Foreground="#FFadadad" FontSize="20" Text="{Binding Artist}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Artist} -->
-										</StackPanel>
-									</Button>
+									<Image Source="{Binding Path=AlbumArt, Converter={StaticResource IValueImageConverter}}" />
+									<Button Style="{StaticResource QuickplayButtonSmall}" Width="40" Height="40" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
 								</Grid>
+									
+								<Button x:Name="btnViewAlbum" Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}" Click="btnViewAlbum_Click">
+									<StackPanel>
+										<TextBlock Foreground="White" Margin="0,-12,0,0" FontSize="35" Text="{Binding Title}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Title} -->
+										<TextBlock Foreground="#FFadadad" FontSize="20" Text="{Binding Artist}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Artist} -->
+									</StackPanel>
+								</Button>
+							</Grid>
 						</DataTemplate>
 					</telerikDataControls:RadJumpList.ItemTemplate>
 				</telerikDataControls:RadJumpList>

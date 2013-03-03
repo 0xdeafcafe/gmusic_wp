@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
+﻿using System.Reflection;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 
 namespace GMusic.WP._8.Pages
 {
@@ -15,6 +8,14 @@ namespace GMusic.WP._8.Pages
 		public About()
 		{
 			InitializeComponent();
+
+			lblAppVer.Text = "GOOGLE MUSIC - " + GetVersionNumber();
+		}
+		private static string GetVersionNumber()
+		{
+			var asm = Assembly.GetExecutingAssembly();
+			var parts = asm.FullName.Split(',');
+			return parts[1].Split('=')[1];
 		}
 	}
 }
