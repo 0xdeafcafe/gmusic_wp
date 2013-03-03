@@ -117,6 +117,9 @@
     <Compile Include="Pages\Authorized\MusicHub.xaml.cs">
       <DependentUpon>MusicHub.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Authorized\Play.xaml.cs">
+      <DependentUpon>Play.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Authorized\ViewAlbum.xaml.cs">
       <DependentUpon>ViewAlbum.xaml</DependentUpon>
     </Compile>
@@ -214,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Authorized\MusicHub.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Authorized\Play.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
