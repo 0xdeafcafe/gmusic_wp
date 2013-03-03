@@ -15,19 +15,29 @@ namespace GMusic.WP._8.Pages.Authorized
 			DataContext = App.ViewModel;
 		}
 
+		// collection
 		private void btnMusicCollection_Click(object sender, RoutedEventArgs e)
 		{
-			NavigationService.Navigate(new Uri("/Pages/Authorized/Browse.xaml", UriKind.Relative));
+			VariousFunctions.NavigateToPage(VariousFunctions.Page.Browse);
 		}
-
-		private void btnAbout_Click(object sender, EventArgs e)
+		private void btnPlaylistCollection_Click(object sender, RoutedEventArgs e)
 		{
-			VariousFunctions.NavigateToPage(VariousFunctions.Page.About);
+			VariousFunctions.NavigateToPage(VariousFunctions.Page.BrowsePlaylists);
 		}
 
+		// history
+
+
+		// new
 		private void btnViewAlbum_Click(object sender, RoutedEventArgs e)
 		{
 			VariousFunctions.ViewAlbum((Models.GoogleMusicAlbum)(((Button)sender).DataContext));
+		}
+
+		// appbar
+		private void btnAbout_Click(object sender, EventArgs e)
+		{
+			VariousFunctions.NavigateToPage(VariousFunctions.Page.About);
 		}
 	}
 }

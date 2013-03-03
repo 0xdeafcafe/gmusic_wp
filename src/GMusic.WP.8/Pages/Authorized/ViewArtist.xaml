@@ -60,7 +60,8 @@
 											<Button Style="{StaticResource QuickplayButtonSmall}" Width="40" Height="40" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
 										</Grid>
 									
-										<Button x:Name="btnViewAlbum" Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}">
+										<Button x:Name="btnViewAlbum" Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}"
+												Click="btnViewAlbum_Click">
 											<StackPanel>
 												<TextBlock Foreground="White" Margin="0,-12,0,0" FontSize="35" Text="{Binding Title}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Title} -->
 												<TextBlock Foreground="#FFadadad" FontSize="20" Text="{Binding Year}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Artist} -->

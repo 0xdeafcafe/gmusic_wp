@@ -59,17 +59,22 @@ namespace GMusic.WP._8.Pages.Authorized
 			Songs.GroupDescriptors.Add(
 				new GenericGroupDescriptor<Models.GoogleMusicSong, string>(song => song.Title.Substring(0, 1).ToLower()));
 			#endregion
+
+			#region Genre
+			// add grouping and descriptors
+			var sortDescriptorsGenre = new List<DataDescriptor>();
+			var sdGenre = new GenericSortDescriptor<Models.GoogleMusicGenre, char>
+			{
+				KeySelector = genre => genre.Genre[0]
+			};
+			sortDescriptorsGenre.Add(sdGenre);
+			Genres.SortDescriptorsSource = sortDescriptorsGenre;
+			Genres.GroupPickerItemsSource = alphabet.Select(c => new string(c, 1)).ToList();
+			Genres.GroupDescriptors.Add(
+				new GenericGroupDescriptor<Models.GoogleMusicGenre, string>(genre => genre.Genre.Substring(0, 1).ToLower()));
+			#endregion
 		}
 
-		private void Song_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
-		{
-			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
-			{
-				e.DataItemToNavigate = group;
-				return;
-			}
-			e.DataItemToNavigate = Songs.Groups[0];
-		}
 		private void Artist_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
 		{
 			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
@@ -80,6 +85,24 @@ namespace GMusic.WP._8.Pages.Authorized
 			e.DataItemToNavigate = Songs.Groups[0];
 		}
 		private void Album_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
+		{
+			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
+			{
+				e.DataItemToNavigate = group;
+				return;
+			}
+			e.DataItemToNavigate = Songs.Groups[0];
+		}
+		private void Song_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
+		{
+			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
+			{
+				e.DataItemToNavigate = group;
+				return;
+			}
+			e.DataItemToNavigate = Songs.Groups[0];
+		}
+		private void Genre_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
 		{
 			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
 			{
@@ -102,6 +125,10 @@ namespace GMusic.WP._8.Pages.Authorized
 		private void btnViewArtist_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			VariousFunctions.ViewArtist((Models.GoogleMusicArtist)(((Button)sender).DataContext));
+		}
+		private void btnViewGenre_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+			VariousFunctions.ViewGenre((Models.GoogleMusicGenre)(((Button)sender).DataContext));
 		}
 	}
 }

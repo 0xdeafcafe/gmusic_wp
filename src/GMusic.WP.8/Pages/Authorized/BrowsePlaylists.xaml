@@ -1,0 +1,104 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="GMusic.WP._8.Pages.Authorized.BrowsePlaylists"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:converters="clr-namespace:GMusic.WP._8.Converters"
+    xmlns:telerikDataControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
+	xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives" 
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+	<phone:PhoneApplicationPage.Resources>
+		<!-- Converters -->
+		<converters:IValueImageConverter x:Key="IValueImageConverter" />
+		<converters:IValueToLowercase x:Key="IValueToLowercase" />
+		<converters:IValueToUppercase x:Key="IValueToUppercase" />
+
+		<!-- Telerik DataTemplates -->
+		<DataTemplate x:Key="CustomGroupHeaderTemplate">
+			<StackPanel HorizontalAlignment="Left" Margin="0,15,0,15" toolkit:TiltEffect.IsTiltEnabled="True">
+				<Border toolkit:TiltEffect.IsTiltEnabled="True" Width="65" Height="65" Background="Green">
+					<TextBlock FontSize="45" Foreground="White" Text="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,2,2,2" />
+				</Border>
+			</StackPanel>
+		</DataTemplate>
+		<ItemsPanelTemplate x:Key="CustomItemsPanelPanel">
+			<telerikPrimitives:RadWrapPanel Margin="12" ItemWidth="108" ItemHeight="108" />
+		</ItemsPanelTemplate>
+		<DataTemplate x:Key="CustomGroupPickerButtonTemplate">
+			<Button Content="{Binding}" Style="{StaticResource GroupPickerButtonTemplate}" />
+		</DataTemplate>
+	</phone:PhoneApplicationPage.Resources>
+
+	<Grid x:Name="LayoutRoot">
+		<Grid.Background>
+			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+				<GradientStop Color="#FF333333" />
+				<GradientStop Color="#FF3C3C3C" Offset="1"/>
+			</LinearGradientBrush>
+		</Grid.Background>
+		<!--Pivot Control-->
+		<phone:Pivot Title="MUSIC" Foreground="White">
+			<phone:PivotItem Header="playlists">
+				<telerikDataControls:RadJumpList x:Name="UserPlaylists" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding UserPlaylists}" IsGroupPickerEnabled="False">
+					<telerikDataControls:RadJumpList.ItemTemplate>
+						<DataTemplate>
+							<Grid Margin="0,5,0,5">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="65" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Button Grid.Column="0" Margin="-12,0,0,0" Width="75" Height="75" Style="{StaticResource QuickplayButton}" HorizontalAlignment="Left" />
+
+								<Button x:Name="btnViewUserPlaylist" Grid.Column="1" Margin="0,5,0,5" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}"
+										Click="btnViewUserPlaylist_Click">
+									<StackPanel>
+										<TextBlock Foreground="White" FontSize="35" Text="{Binding Title}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" />
+										<!-- {Binding Title} -->
+										<TextBlock Foreground="#FFACACAC" FontSize="21.333" Text="{Binding SongCount}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" />
+										<!-- {Binding SongCount} -->
+									</StackPanel>
+								</Button>
+							</Grid>
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.ItemTemplate>
+				</telerikDataControls:RadJumpList>
+			</phone:PivotItem>
+
+			<phone:PivotItem Header="instant mix's">
+				<telerikDataControls:RadJumpList x:Name="InstantMixs" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding InstantMixes}" IsGroupPickerEnabled="False">
+					<telerikDataControls:RadJumpList.ItemTemplate>
+						<DataTemplate>
+							<Grid Margin="0,5,0,5">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="65" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Button Grid.Column="0" Margin="-12,0,0,0" Width="75" Height="75" Style="{StaticResource QuickplayButton}" HorizontalAlignment="Left" />
+
+								<Button x:Name="btnViewInstantMix" Grid.Column="1" Margin="0,5,0,5" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}"
+										Click="btnViewInstantMix_Click">
+									<StackPanel>
+										<TextBlock Foreground="White" FontSize="35" Text="{Binding Title}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" />
+										<!-- {Binding Title} -->
+										<TextBlock Foreground="#FFACACAC" FontSize="21.333" Text="{Binding SongCount}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" />
+										<!-- {Binding SongCount} -->
+									</StackPanel>
+								</Button>
+							</Grid>
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.ItemTemplate>
+				</telerikDataControls:RadJumpList>
+			</phone:PivotItem>
+		</phone:Pivot>
+    </Grid>
+
+</phone:PhoneApplicationPage>

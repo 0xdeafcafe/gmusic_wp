@@ -144,7 +144,7 @@
 							
 							<StackPanel Margin="0,30,0,0">
 								<Button x:Name="btnMusicCollection" Content="music" Style="{StaticResource HubCollectionButton}" Click="btnMusicCollection_Click" />
-								<Button x:Name="btnPlaylistCollection" Content="playlists" Style="{StaticResource HubCollectionButton}" />
+								<Button x:Name="btnPlaylistCollection" Content="playlists" Style="{StaticResource HubCollectionButton}" Click="btnPlaylistCollection_Click" />
 							</StackPanel>
 						</StackPanel>
 					</Grid>

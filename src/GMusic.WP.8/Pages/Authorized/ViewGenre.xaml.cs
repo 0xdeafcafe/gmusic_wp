@@ -1,13 +1,11 @@
-﻿using System.Windows.Controls;
-using System.Windows.Navigation;
-using GMusic.API;
+﻿using System.Windows.Navigation;
 using GMusic.WP._8.Helpers;
 
 namespace GMusic.WP._8.Pages.Authorized
 {
-	public partial class ViewArtist
+	public partial class ViewGenre
 	{
-		public ViewArtist()
+		public ViewGenre()
 		{
 			InitializeComponent();
 		}
@@ -24,11 +22,6 @@ namespace GMusic.WP._8.Pages.Authorized
 				VariousFunctions.TryGoingBack();
 			}
 			base.OnNavigatedTo(e);
-		}
-
-		private void btnViewAlbum_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-			VariousFunctions.ViewAlbum((Models.GoogleMusicAlbum)(((Button)sender).DataContext));
 		}
 	}
 }

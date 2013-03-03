@@ -5,12 +5,11 @@ using GMusic.API;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using GMusic.WP._8.Resources;
 using Newtonsoft.Json;
 
 namespace GMusic.WP._8.ViewModels
 {
-	public class GlobalViewModel : INotifyPropertyChanged, IStorage
+	public class GlobalViewModel : INotifyPropertyChanged
 	{
 		private ObservableCollection<Models.GoogleMusicSong> _allSongs = new ObservableCollection<Models.GoogleMusicSong>();
 		public ObservableCollection<Models.GoogleMusicSong> AllSongs
@@ -19,8 +18,8 @@ namespace GMusic.WP._8.ViewModels
 			set 
 			{ 
 				_allSongs = value; 
-				NotifyPropertyChanged("AllSongs"); 
-				Save();
+				NotifyPropertyChanged("AllSongs");
+				Save("all_songs");
 
 				#region Albums
 				AllAlbums.Clear();
@@ -58,6 +57,21 @@ namespace GMusic.WP._8.ViewModels
 						artist.Albums.Add(album);
 					}
 				#endregion
+
+				#region Genre
+				foreach (var song in _allSongs.Where(song => !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim())))
+				{
+					// Add Genre if it doesn't exist
+					if (AllGenres.All(genre => genre.Genre.ToLower().Trim() != song.Genre.ToLower().Trim()))
+						AllGenres.Add(new Models.GoogleMusicGenre() { Genre = song.Genre });
+
+					// Add song to that genre
+					var genreToPopulate = AllGenres.First(genre => genre.Genre.ToLower().Trim() == song.Genre.ToLower().Trim());
+					if (genreToPopulate.Songs == null) genreToPopulate.Songs = new List<Models.GoogleMusicSong>();
+					if (!String.IsNullOrEmpty(song.Title.Trim()))
+						genreToPopulate.Songs.Add(song);
+				}
+				#endregion
 			}
 		}
 
@@ -73,6 +87,13 @@ namespace GMusic.WP._8.ViewModels
 		{
 			get { return _allAlbums; }
 			private set { _allAlbums = value; NotifyPropertyChanged("AllAlbums"); }
+		}
+
+		private ObservableCollection<Models.GoogleMusicGenre> _allGenres = new ObservableCollection<Models.GoogleMusicGenre>();
+		public ObservableCollection<Models.GoogleMusicGenre> AllGenres
+		{
+			get { return _allGenres; }
+			private set { _allGenres = value; NotifyPropertyChanged("AllGenres"); }
 		}
 
 		public IList<Models.GoogleMusicAlbum> NewAlbums
@@ -94,7 +115,7 @@ namespace GMusic.WP._8.ViewModels
 		public Models.GoogleMusicPlaylists Playlists
 		{
 			get { return _playlists; }
-			set { _playlists = value; NotifyPropertyChanged("Playlists"); Save(); }
+			set { _playlists = value; NotifyPropertyChanged("Playlists"); Save("playlists"); }
 		}
 
 		private Models.GoogleMusicAlbum _selectedAlbum;
@@ -163,10 +184,28 @@ namespace GMusic.WP._8.ViewModels
 			return _appSettings.Contains(key) ? (string)_appSettings[key] : null;
 		}
 
-		public void Save()
+		public void Save(string loadId = null)
 		{
-			SaveString("all_songs", JsonConvert.SerializeObject(AllSongs));
-			SaveString("playlists", JsonConvert.SerializeObject(Playlists));
+			if (loadId == null)
+			{
+				SaveString("all_songs", JsonConvert.SerializeObject(AllSongs));
+				SaveString("playlists", JsonConvert.SerializeObject(Playlists));
+			}
+			else
+			{
+				switch (loadId)
+				{
+					case "all_songs":
+						SaveString("all_songs", JsonConvert.SerializeObject(AllSongs));
+						break;
+					case "playlists":
+						SaveString("playlists", JsonConvert.SerializeObject(Playlists));
+						break;
+
+					default:
+						break;
+				}
+			}
 
 			_appSettings.Save();
 		}

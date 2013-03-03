@@ -126,6 +126,31 @@
 					</telerikDataControls:RadJumpList.ItemTemplate>
 				</telerikDataControls:RadJumpList>
 			</phone:PivotItem>
+
+			<!--Pivot item three-->
+			<phone:PivotItem Header="genre">
+				<telerikDataControls:RadJumpList x:Name="Genres" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding AllGenres}"
+					GroupPickerItemTap="Genre_GroupPickerItemTap"
+					GroupHeaderTemplate="{StaticResource CustomGroupHeaderTemplate}"
+					GroupPickerItemsPanel="{StaticResource CustomItemsPanelPanel}"
+					GroupPickerItemTemplate="{StaticResource CustomGroupPickerButtonTemplate}">
+					<telerikDataControls:RadJumpList.ItemTemplate>
+						<DataTemplate>
+							<Grid Margin="0,5,0,5">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="65" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Button Grid.Column="0" Margin="-12,0,0,0" Width="75" Height="75" Style="{StaticResource QuickplayButton}" HorizontalAlignment="Left" />
+									
+								<Button x:Name="btnViewGenre" Grid.Column="1" Margin="0,5,0,5" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource BrowseSongSelectionButton}" Click="btnViewGenre_Click">
+									<TextBlock Foreground="White" FontSize="35" Text="{Binding Genre}" VerticalAlignment="Center" FontFamily="Segoe WP Semilight" /> <!-- {Binding Artist} -->
+								</Button>
+							</Grid>
+						</DataTemplate>
+					</telerikDataControls:RadJumpList.ItemTemplate>
+				</telerikDataControls:RadJumpList>
+			</phone:PivotItem>
 		</phone:Pivot>
 	</Grid>
 
