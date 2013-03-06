@@ -26,11 +26,11 @@ namespace GMusic.WP._8.ViewModels
 				foreach (var song in _allSongs.Where(song => !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim())))
 				{
 					// Add Artist if it doesn't exist
-					if (!AllAlbums.Any(album => album.Title == song.Album && album.Artist == song.Artist))
-						AllAlbums.Add(new Models.GoogleMusicAlbum() {Title = song.Album, AlbumArt = song.ArtURL, Artist = song.Artist});
+					if (!AllAlbums.Any(album => album.Title == song.Album))
+						AllAlbums.Add(new Models.GoogleMusicAlbum { Title = song.Album, AlbumArt = song.ArtURL, Artist = song.Artist });
 
 					// Add Songs
-					var albumAvaiable = AllAlbums.First(album => album.Artist == song.Artist && album.Title == song.Album);
+					var albumAvaiable = AllAlbums.First(album => album.Artist == song.Artist);
 					if (albumAvaiable.Songs == null) albumAvaiable.Songs = new List<Models.GoogleMusicSong>();
 					albumAvaiable.Songs.Add(song);
 				}
@@ -42,7 +42,7 @@ namespace GMusic.WP._8.ViewModels
 				{
 					// Add Artist if it doesn't exist
 					if (AllArtists.All(artist => artist.Artist.ToLower().Trim() != song.Artist.ToLower().Trim()))
-						AllArtists.Add(new Models.GoogleMusicArtist {Artist = song.Artist});
+						AllArtists.Add(new Models.GoogleMusicArtist { Artist = song.Artist });
 
 					// Add Songs
 					var songsAvaiable = AllArtists.First(artist => artist.Artist.ToLower().Trim() == song.Artist.ToLower().Trim());
@@ -116,33 +116,6 @@ namespace GMusic.WP._8.ViewModels
 		{
 			get { return _playlists; }
 			set { _playlists = value; NotifyPropertyChanged("Playlists"); Save("playlists"); }
-		}
-
-		private Models.GoogleMusicAlbum _selectedAlbum;
-		public Models.GoogleMusicAlbum SelectedAlbum
-		{
-			get
-			{
-				return _selectedAlbum;
-			}
-			set 
-			{ 
-				_selectedAlbum = value; 
-				NotifyPropertyChanged("SelectedAlbum"); 
-			}
-		}
-		private Models.GoogleMusicArtist _selectedArtist;
-		public Models.GoogleMusicArtist SelectedArtist
-		{
-			get
-			{
-				return _selectedArtist;
-			}
-			set
-			{
-				_selectedArtist = value;
-				NotifyPropertyChanged("SelectedArtist");
-			}
 		}
 
 		private Dictionary<string, object> _selectedView = new Dictionary<string, object>();
