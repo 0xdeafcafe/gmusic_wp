@@ -12,7 +12,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
-	shell:SystemTray.ForegroundColor="#FF333333">
+	shell:SystemTray.BackgroundColor="#FF333333">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
@@ -26,25 +26,59 @@
         <Grid x:Name="ContentPanel" Margin="25,0,25,0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="125" />
-				<RowDefinition Height="70" />
+				<RowDefinition Height="10" />
 
 				<RowDefinition Height="100" />
 				<RowDefinition Height="10" />
 
-				<RowDefinition Height="200" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
+                <RowDefinition Height="306" />
+                <RowDefinition Height="10" />
 
-			<StackPanel Grid.Row="0" Orientation="Horizontal">
-				<Button />
-				<Button />
-				<Button />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+			<StackPanel Margin="-12,0,0,0" Grid.Row="0" Orientation="Horizontal">
+				<Button Style="{StaticResource RewindButton}" />
+                <Button Style="{StaticResource PlayTempButton}" Margin="10,0,10,0" />
+                <Button Style="{StaticResource FastforwardButton}"/>
 			</StackPanel>
 
 			<StackPanel Grid.Row="2">
 				<TextBlock Text="Muse" Foreground="White" FontSize="42.667" />
 				<TextBlock Text="The Resistance" Foreground="White" FontSize="33.333" />
 			</StackPanel>
+            
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="266" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="266" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Grid.Row="0" Source="/Assets/Placeholder/unnamed.jpg" />
+                
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="4" />
+                        <RowDefinition Height="4" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Value="20" Style="{StaticResource MusicTimeline}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="0:12" Foreground="White" HorizontalAlignment="Left" FontSize="14" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="3:23" Foreground="White" HorizontalAlignment="Right" FontSize="14" />
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 
