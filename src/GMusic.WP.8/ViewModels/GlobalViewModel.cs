@@ -30,9 +30,9 @@ namespace GMusic.WP._8.ViewModels
 						AllAlbums.Add(new Models.GoogleMusicAlbum { Title = song.Album, AlbumArt = song.ArtURL, Artist = song.Artist });
 
 					// Add Songs
-					var albumAvaiable = AllAlbums.First(album => album.Artist == song.Artist);
+					var albumAvaiable = AllAlbums.First(album => album.Title == song.Album);
 					if (albumAvaiable.Songs == null) albumAvaiable.Songs = new List<Models.GoogleMusicSong>();
-					albumAvaiable.Songs.Add(song);
+                    albumAvaiable.Songs.Add(song);
 				}
 				#endregion
 
