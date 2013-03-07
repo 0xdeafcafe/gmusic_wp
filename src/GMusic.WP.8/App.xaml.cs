@@ -101,7 +101,7 @@ namespace GMusic.WP._8
 		
 		void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
 		{
-			if (e.Uri.ToString().Contains("/Pages/Signin.xaml") && IsolatedStorage.GoogleAuthToken != null)
+			if (e.Uri.ToString().ToLower().Contains("/pages/signin.xaml") && IsolatedStorage.GoogleAuthToken != null)
 			{
 				e.Cancel = true;
 				RootFrame.Dispatcher.BeginInvoke(() => RootFrame.Navigate(new Uri("/Pages/LoginSplash.xaml", UriKind.Relative)));

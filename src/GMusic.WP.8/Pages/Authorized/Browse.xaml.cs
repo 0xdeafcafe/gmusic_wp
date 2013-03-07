@@ -1,16 +1,19 @@
-﻿using System.Windows.Controls;
+﻿using System.Globalization;
+using System.Windows.Controls;
 using GMusic.API;
 using GMusic.WP._8.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
+using System;
 
 namespace GMusic.WP._8.Pages.Authorized
 {
 	public partial class Browse
 	{
 		private const string alphabet = "#abcdefghijklmnopqrstuvwxyz";
+        private List<string> inUse = new List<string>();
 
 		public Browse()
 		{
@@ -18,98 +21,75 @@ namespace GMusic.WP._8.Pages.Authorized
 
 			DataContext = App.ViewModel;
 
-			#region Artists
-			// add grouping and descriptors
-			var sortDescriptorsArtist = new List<DataDescriptor>();
-			var sdArtist = new GenericSortDescriptor<Models.GoogleMusicArtist, char>
-			{
-				KeySelector = artist => artist.Artist[0]
-			};
-			sortDescriptorsArtist.Add(sdArtist);
-			Artists.SortDescriptorsSource = sortDescriptorsArtist;
-			Artists.GroupPickerItemsSource = alphabet.Select(c => new string(c, 1)).ToList();
-			Artists.GroupDescriptors.Add(
-				new GenericGroupDescriptor<Models.GoogleMusicArtist, string>(artist => artist.Artist.Substring(0, 1).ToLower()));
+            #region Artists
+            inUse = new List<string>();
+		    Artists.ItemsSource = App.ViewModel.AllArtists;
+		    Artists.SortDescriptors.Add(new GenericSortDescriptor<Models.GoogleMusicArtist, char>
+		                                    {
+                                                KeySelector = artist => AddDescriptior(artist.Artist)
+		                                    });
+            Artists.GroupDescriptors.Add(new GenericGroupDescriptor<Models.GoogleMusicArtist, char>
+		                                    {
+                                                KeySelector = artist => AddDescriptior(artist.Artist)
+		                                    });
+		    FinishInUseList();
+		    Artists.GroupPickerItemsSource = string.Join("", inUse).Select(c => new string(c, 1)).ToList();
 			#endregion
 
 			#region Albums
-			// add grouping and descriptors
-			var sortDescriptorsAlbum = new List<DataDescriptor>();
-			var sdAlbum = new GenericSortDescriptor<Models.GoogleMusicAlbum, char>
-			{
-				KeySelector = album => album.Title[0]
-			};
-			sortDescriptorsAlbum.Add(sdAlbum);
-			Albums.SortDescriptorsSource = sortDescriptorsAlbum;
-			Albums.GroupPickerItemsSource = alphabet.Select(c => new string(c, 1)).ToList();
-			Albums.GroupDescriptors.Add(
-				new GenericGroupDescriptor<Models.GoogleMusicAlbum, string>(song => song.Title.Substring(0, 1).ToLower()));
+            inUse = new List<string>();
+            Albums.ItemsSource = App.ViewModel.AllAlbums;
+            Albums.SortDescriptors.Add(new GenericSortDescriptor<Models.GoogleMusicAlbum, string>
+            {
+                KeySelector = album => AddDescriptior(album.Artist).ToString(CultureInfo.InvariantCulture)
+            });
+            Albums.GroupDescriptors.Add(new GenericGroupDescriptor<Models.GoogleMusicAlbum, char>
+            {
+                KeySelector = album => AddDescriptior(album.Artist)
+            });
+            FinishInUseList();
+            Albums.GroupPickerItemsSource = string.Join("", inUse).Select(c => new string(c, 1)).ToList();
 			#endregion
 
-			#region Songs
-			// add grouping and descriptors
-			var sortDescriptorsSong = new List<DataDescriptor>();
-			var sdSong = new GenericSortDescriptor<Models.GoogleMusicSong, char>
-				         {
-					         KeySelector = song => song.Title[0]
-				         };
-			sortDescriptorsSong.Add(sdSong);
-			Songs.SortDescriptorsSource = sortDescriptorsSong;
-			Songs.GroupPickerItemsSource = alphabet.Select(c => new string(c, 1)).ToList();
-			Songs.GroupDescriptors.Add(
-				new GenericGroupDescriptor<Models.GoogleMusicSong, string>(song => song.Title.Substring(0, 1).ToLower()));
+            #region Songs
+            inUse = new List<string>();
+            Songs.ItemsSource = App.ViewModel.AllSongs;
+            Songs.SortDescriptors.Add(new GenericSortDescriptor<Models.GoogleMusicSong, string>
+            {
+                KeySelector = song => AddDescriptior(song.Title).ToString(CultureInfo.InvariantCulture)
+            });
+            Songs.GroupDescriptors.Add(new GenericGroupDescriptor<Models.GoogleMusicSong, char>
+            {
+                KeySelector = song => AddDescriptior(song.Title)
+            });
+            FinishInUseList();
+            Songs.GroupPickerItemsSource = string.Join("", inUse).Select(c => new string(c, 1)).ToList();
 			#endregion
 
-			#region Genre
-			// add grouping and descriptors
-			var sortDescriptorsGenre = new List<DataDescriptor>();
-			var sdGenre = new GenericSortDescriptor<Models.GoogleMusicGenre, char>
-			{
-				KeySelector = genre => genre.Genre[0]
-			};
-			sortDescriptorsGenre.Add(sdGenre);
-			Genres.SortDescriptorsSource = sortDescriptorsGenre;
-			Genres.GroupPickerItemsSource = alphabet.Select(c => new string(c, 1)).ToList();
-			Genres.GroupDescriptors.Add(
-				new GenericGroupDescriptor<Models.GoogleMusicGenre, string>(genre => genre.Genre.Substring(0, 1).ToLower()));
+            #region Genre
+            inUse = new List<string>();
+            Genres.ItemsSource = App.ViewModel.AllGenres;
+            Genres.SortDescriptors.Add(new GenericSortDescriptor<Models.GoogleMusicGenre, string>
+            {
+                KeySelector = genre => AddDescriptior(genre.Genre).ToString(CultureInfo.InvariantCulture)
+            });
+            Genres.GroupDescriptors.Add(new GenericGroupDescriptor<Models.GoogleMusicGenre, char>
+            {
+                KeySelector = genre => AddDescriptior(genre.Genre)
+            });
+            FinishInUseList();
+            Genres.GroupPickerItemsSource = string.Join("", inUse).Select(c => new string(c, 1)).ToList();
 			#endregion
 		}
 
-		private void Artist_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
+		private void View_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
 		{
-			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
-			{
-				e.DataItemToNavigate = group;
-				return;
-			}
-			e.DataItemToNavigate = Songs.Groups[0];
-		}
-		private void Album_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
-		{
-			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
-			{
-				e.DataItemToNavigate = group;
-				return;
-			}
-			e.DataItemToNavigate = Songs.Groups[0];
-		}
-		private void Song_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
-		{
-			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
-			{
-				e.DataItemToNavigate = group;
-				return;
-			}
-			e.DataItemToNavigate = Songs.Groups[0];
-		}
-		private void Genre_GroupPickerItemTap(object sender, GroupPickerItemTapEventArgs e)
-		{
-			foreach (var group in Songs.Groups.Where(group => Equals(e.DataItem, group.Key)))
-			{
-				e.DataItemToNavigate = group;
-				return;
-			}
-			e.DataItemToNavigate = Songs.Groups[0];
+		    var index = 0;
+		    var alphaList = alphabet.ToList();
+            for (var i = 0; i < alphaList.Count(); i++)
+                if (alphaList[i] == ((string)e.DataItem)[0])
+                    index = i;
+		    e.DataItemToNavigate = Artists.Groups[index];
 		}
 		private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -130,5 +110,24 @@ namespace GMusic.WP._8.Pages.Authorized
 		{
 			VariousFunctions.ViewGenre((Models.GoogleMusicGenre)(((Button)sender).DataContext));
 		}
+
+        public char AddDescriptior(string alpha)
+        {
+            var beta = alpha.ToLower().StartsWith("the ")
+                ? Char.IsLetter(alpha[4]) ? Char.ToLower(alpha[4]) : '#'
+                : Char.IsLetter(alpha[0]) ? Char.ToLower(alpha[0]) : '#';
+
+            if (inUse.Count(use => Char.ToLowerInvariant(use[0]) == beta) <= 0)
+                inUse.Add(Char.ToLowerInvariant(beta).ToString());
+
+            return beta;
+        }
+        public void FinishInUseList()
+        {
+            foreach (var letter in alphabet.Where(letter => inUse.Count(use => use[0] == letter) <= 0))
+                inUse.Add(Char.ToUpperInvariant(letter).ToString());
+
+            inUse.Sort();
+        }
 	}
 }

@@ -100,9 +100,11 @@
     </Compile>
     <Compile Include="Converters\IValueBrowseSongSplitter.cs" />
     <Compile Include="Converters\IValueImageConverter.cs" />
+    <Compile Include="Converters\IValueLazyGroupDescriptor.cs" />
     <Compile Include="Converters\IValueToLowercase.cs" />
     <Compile Include="Converters\IValueToUppercase.cs" />
     <Compile Include="Helpers\AlphaKeyGroup.cs" />
+    <Compile Include="Helpers\CharCompare.cs" />
     <Compile Include="Helpers\VariousFunctions.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Pages\About.xaml.cs">

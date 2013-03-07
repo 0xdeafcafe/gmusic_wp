@@ -18,9 +18,11 @@
 
 	<phone:PhoneApplicationPage.Resources>
 		<!-- Converters -->
-		<converters:IValueImageConverter x:Key="IValueImageConverter" />
+        <converters:IValueImageConverter x:Key="IValueImageConverter" />
+        <converters:IValueToLowercase x:Key="IValueToLowercase" />
+        <converters:IValueLazyGroupDescriptor x:Key="IValueLazyGroupDescriptor" />
 
-		<!-- Telerik DataTemplates -->
+        <!-- Telerik DataTemplates -->
 		<DataTemplate x:Key="CustomGroupHeaderTemplate">
 			<StackPanel HorizontalAlignment="Left" Margin="0,15,0,15" toolkit:TiltEffect.IsTiltEnabled="True">
 				<Border toolkit:TiltEffect.IsTiltEnabled="True" Width="65" Height="65" Background="Green">
@@ -32,7 +34,7 @@
 			<telerikPrimitives:RadWrapPanel Margin="12" ItemWidth="108" ItemHeight="108" />
 		</ItemsPanelTemplate>
 		<DataTemplate x:Key="CustomGroupPickerButtonTemplate">
-			<Button Content="{Binding}" Style="{StaticResource GroupPickerButtonTemplate}" />
+            <Button IsEnabled="{Binding Converter={StaticResource IValueLazyGroupDescriptor}}" Content="{Binding Converter={StaticResource IValueToLowercase}}" Style="{StaticResource GroupPickerButtonTemplate}" />
 		</DataTemplate>
 	</phone:PhoneApplicationPage.Resources>
 	<phone:PhoneApplicationPage.FontFamily>
@@ -52,7 +54,7 @@
 			<!--Pivot item one-->
 			<phone:PivotItem Header="artists">
 				<telerikDataControls:RadJumpList x:Name="Artists" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding AllArtists}"
-					GroupPickerItemTap="Artist_GroupPickerItemTap"
+					GroupPickerItemTap="View_GroupPickerItemTap"
 					GroupHeaderTemplate="{StaticResource CustomGroupHeaderTemplate}"
 					GroupPickerItemsPanel="{StaticResource CustomItemsPanelPanel}"
 					GroupPickerItemTemplate="{StaticResource CustomGroupPickerButtonTemplate}">
@@ -77,7 +79,7 @@
 			<!--Pivot item two-->
 			<phone:PivotItem Header="albums">
 				<telerikDataControls:RadJumpList x:Name="Albums" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding AllAlbums}"
-					GroupPickerItemTap="Album_GroupPickerItemTap"
+					GroupPickerItemTap="View_GroupPickerItemTap"
 					GroupHeaderTemplate="{StaticResource CustomGroupHeaderTemplate}"
 					GroupPickerItemsPanel="{StaticResource CustomItemsPanelPanel}"
 					GroupPickerItemTemplate="{StaticResource CustomGroupPickerButtonTemplate}">
@@ -110,7 +112,7 @@
 			<!--Pivot item three-->
 			<phone:PivotItem Header="songs">
 				<telerikDataControls:RadJumpList x:Name="Songs" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding AllSongs}"
-					GroupPickerItemTap="Song_GroupPickerItemTap"
+					GroupPickerItemTap="View_GroupPickerItemTap"
 					GroupHeaderTemplate="{StaticResource CustomGroupHeaderTemplate}"
 					GroupPickerItemsPanel="{StaticResource CustomItemsPanelPanel}"
 					GroupPickerItemTemplate="{StaticResource CustomGroupPickerButtonTemplate}">
@@ -130,7 +132,7 @@
 			<!--Pivot item three-->
 			<phone:PivotItem Header="genre">
 				<telerikDataControls:RadJumpList x:Name="Genres" IsAsyncBalanceEnabled="True" Margin="10,0,0,0" ItemsSource="{Binding AllGenres}"
-					GroupPickerItemTap="Genre_GroupPickerItemTap"
+					GroupPickerItemTap="View_GroupPickerItemTap"
 					GroupHeaderTemplate="{StaticResource CustomGroupHeaderTemplate}"
 					GroupPickerItemsPanel="{StaticResource CustomItemsPanelPanel}"
 					GroupPickerItemTemplate="{StaticResource CustomGroupPickerButtonTemplate}">
