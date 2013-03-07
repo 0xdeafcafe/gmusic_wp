@@ -43,7 +43,7 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<TextBlock Grid.Column="0" Text="?" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="96" />
-							<Image Grid.Column="0" Width="175" Height="175" Source="{Binding Path=AlbumArt, Converter={StaticResource IValueImageConverter}}" Stretch="UniformToFill" />
+							<Image Grid.Column="0" Width="175" Height="175" Source="{Binding Path=AlbumArtUrl, Converter={StaticResource IValueImageConverter}}" Stretch="UniformToFill" />
 							
 							<StackPanel Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Top">
 								<Button x:Name="btnViewArtist" Click="btnViewArtist_Click" Style="{StaticResource EmptyButtonStyle}" HorizontalContentAlignment="Left">

@@ -1,11 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Threading.Tasks;
 using GMusic.API;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Microsoft.Phone.BackgroundAudio;
+using GMusic.WP._8.Helpers;
+using System.Net;
 
 namespace GMusic.WP._8.ViewModels
 {
@@ -21,13 +25,19 @@ namespace GMusic.WP._8.ViewModels
 				NotifyPropertyChanged("AllSongs");
 				Save("all_songs");
 
-				#region Albums
+                if (NowPlaying == null)
+                {
+                    NowPlaying = AllSongs.Take(10).ToList();
+                    NextTrack();
+                }
+
+			    #region Albums
 				AllAlbums.Clear();
 				foreach (var song in _allSongs.Where(song => !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim())))
 				{
 					// Add Artist if it doesn't exist
 					if (!AllAlbums.Any(album => album.Title == song.Album))
-						AllAlbums.Add(new Models.GoogleMusicAlbum { Title = song.Album, AlbumArt = song.ArtURL, Artist = song.Artist });
+						AllAlbums.Add(new Models.GoogleMusicAlbum { Title = song.Album, AlbumArt = song.AlbumArtUrl, Artist = song.Artist });
 
 					// Add Songs
 					var albumAvaiable = AllAlbums.First(album => album.Title == song.Album);
@@ -96,7 +106,15 @@ namespace GMusic.WP._8.ViewModels
 			private set { _allGenres = value; NotifyPropertyChanged("AllGenres"); }
 		}
 
-		public IList<Models.GoogleMusicAlbum> NewAlbums
+
+	    public BackgroundAudioPlayer Player
+	    {
+            get { return BackgroundAudioPlayer.Instance; }
+	    }
+        public IList<Models.GoogleMusicSong> NowPlaying { get; set; }
+
+
+	    public IList<Models.GoogleMusicAlbum> NewAlbums
 		{
 			get
 			{
@@ -137,11 +155,49 @@ namespace GMusic.WP._8.ViewModels
 		}
 
 		#region Functions
+        public async void NextTrack()
+        {
+            NowPlaying.Move(ListExtensions.Destination.End);
+
+            if (string.IsNullOrEmpty(NowPlaying[0].Url))
+            {
+                var derp = await DownloadSongUrl(NowPlaying[0]);
+
+                NowPlaying[0].Url = derp.URL;
+            }
+        }
+
+        public Task<Models.GoogleMusicSongUrl> DownloadSongUrl(Models.GoogleMusicSong song)
+        {
+            var tcs = new TaskCompletionSource<Models.GoogleMusicSongUrl>();
+
+            if (song.Url != null)
+            {
+                var url = new Uri(song.Url);
+                var query = url.Query;
+                if (!Time.Helpers.HasPassed(new QueryString(url)["expire"]))
+                {
+                    tcs.SetResult(new Models.GoogleMusicSongUrl
+                                      {
+                                          URL = song.Url
+                                      });
+                    return tcs.Task;
+                }
+            }
+            App.ApiManager.OnError += tcs.SetException;
+            App.ApiManager.OnGetSongURL += tcs.SetResult;
+            App.ApiManager.GetSongURL(song.Id);
+
+            return tcs.Task;
+        }
+        public void AddUrl(Models.GoogleMusicSong song)
+        {
+            
+        }
 		public Models.GoogleMusicArtist GetArtistFromString(string artistString)
 		{
 			return _allArtists.FirstOrDefault(artistT => artistT.Artist.ToString().ToLower().Trim() == artistString.ToLower().Trim());
 		}
-
 		#endregion
 
 		#region Storage

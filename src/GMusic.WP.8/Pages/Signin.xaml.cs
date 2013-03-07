@@ -11,7 +11,7 @@ namespace GMusic.WP._8.Pages
 			InitializeComponent();
 		}
 
-		private async void btnSignIn_Click(object sender, RoutedEventArgs e)
+		private void btnSignIn_Click(object sender, RoutedEventArgs e)
 		{
 			StartPendingAnimation.Begin();
 			StartPendingAnimation.Completed += (o, args) =>

@@ -105,6 +105,9 @@
     <Compile Include="Converters\IValueToUppercase.cs" />
     <Compile Include="Helpers\AlphaKeyGroup.cs" />
     <Compile Include="Helpers\CharCompare.cs" />
+    <Compile Include="Helpers\IListExtensions.cs" />
+    <Compile Include="Helpers\QueryString.cs" />
+    <Compile Include="Helpers\UnixTimestamp.cs" />
     <Compile Include="Helpers\VariousFunctions.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Pages\About.xaml.cs">
@@ -296,6 +299,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GMusic.Agent.8\GMusic.Agent.8.csproj">
+      <Project>{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}</Project>
+      <Name>GMusic.Agent.8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GMusic.API\GMusic.API.csproj">
       <Project>{0CACD01C-5965-446F-AF30-BA24FB71BCFB}</Project>
       <Name>GMusic.API</Name>

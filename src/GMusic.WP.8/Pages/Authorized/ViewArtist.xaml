@@ -56,7 +56,7 @@
 										<Grid Grid.Column="0" Height="175" Width="175">
 											<TextBlock Text="?" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="96" />
 
-											<Image Source="{Binding Path=AlbumArt, Converter={StaticResource IValueImageConverter}}" />
+											<Image Source="{Binding Path=AlbumArtUrl, Converter={StaticResource IValueImageConverter}}" />
 											<Button Style="{StaticResource QuickplayButtonSmall}" Width="40" Height="40" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
 										</Grid>
 									

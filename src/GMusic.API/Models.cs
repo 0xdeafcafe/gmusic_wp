@@ -85,138 +85,39 @@ namespace GMusic.API
 
 		public class GoogleMusicSong
 		{
-			string albumart;
-
-			[JsonProperty("genre")]
-			public string Genre { get; set; }
-
-
-			[JsonProperty("beatsPerMinute")]
-			public int BPM { get; set; }
-
-
-			[JsonProperty("albumArtistNorm")]
-			public string AlbumArtistNorm { get; set; }
-
-
-			[JsonProperty("artistNorm")]
-			public string ArtistNorm { get; set; }
-
-
-			[JsonProperty("album")]
-			public string Album { get; set; }
-
-
-			[JsonProperty("lastPlayed")]
-			public double LastPlayed { get; set; }
-
-
-			[JsonProperty("type")]
-			public int Type { get; set; }
-
-
-			[JsonProperty("disc")]
-			public int Disc { get; set; }
-
-
-			[JsonProperty("id")]
-			public string ID { get; set; }
-
-
-			[JsonProperty("composer")]
-			public string Composer { get; set; }
-
-
-			[JsonProperty("title")]
-			public string Title { get; set; }
-
-
-			[JsonProperty("albumArtist")]
-			public string AlbumArtist { get; set; }
-
-
-			[JsonProperty("totalTracks")]
-			public int TotalTracks { get; set; }
-
-
-			[JsonProperty("name")]
-			public string Name { get; set; }
-
-
-			[JsonProperty("totalDiscs")]
-			public int TotalDiscs { get; set; }
-
-
-			[JsonProperty("year")]
-			public int Year { get; set; }
-
-
-			[JsonProperty("titleNorm")]
-			public string TitleNorm { get; set; }
-
-
-			[JsonProperty("artist")]
-			public string Artist { get; set; }
-
-
-			[JsonProperty("albumNorm")]
-			public string AlbumNorm { get; set; }
-
-
-			[JsonProperty("track")]
-			public int Track { get; set; }
-
-
-			[JsonProperty("durationMillis")]
-			public long Duration { get; set; }
-
-
-			[JsonProperty("albumArt")]
-			public string AlbumArt { get; set; }
-
-
-			[JsonProperty("deleted")]
-			public bool Deleted { get; set; }
-
-
-			[JsonProperty("url")]
-			public string URL { get; set; }
-
-
-			[JsonProperty("creationDate")]
-			public float CreationDate { get; set; }
-
-
-			[JsonProperty("playCount")]
-			public int Playcount { get; set; }
-
-
-			[JsonProperty("rating")]
-			public int Rating { get; set; }
-
-
-			[JsonProperty("comment")]
-			public string Comment { get; set; }
-
-
-			[JsonProperty("albumArtUrl")]
-			public string ArtURL
-			{
-				get
-				{
-					return (albumart != null && !albumart.StartsWith("http:")) ? "http:" + albumart : albumart;
-				}
-				set { albumart = value; }
-			}
-
-
-			public string ArtistAlbum
-			{
-				get
-				{
-					return Artist + ", " + Album;
-				}
-			}
+            public string Genre { get; set; }
+            public int BeatsPerMinute { get; set; }
+            public string AlbumArtistNorm { get; set; }
+            public string ArtistNorm { get; set; }
+            public string Album { get; set; }
+            public object LastPlayed { get; set; }
+            public int Type { get; set; }
+            public object RecentTimestamp { get; set; }
+            public int Disc { get; set; }
+            public string Id { get; set; }
+            public string Composer { get; set; }
+            public string Title { get; set; }
+            public string AlbumArtist { get; set; }
+            public string ArtistMatchedId { get; set; }
+            public int TotalTracks { get; set; }
+            public bool SubjectToCuration { get; set; }
+            public string Name { get; set; }
+            public int TotalDiscs { get; set; }
+            public int Year { get; set; }
+            public string TitleNorm { get; set; }
+            public string Artist { get; set; }
+            public string AlbumNorm { get; set; }
+            public int Track { get; set; }
+            public int DurationMillis { get; set; }
+            public string MatchedId { get; set; }
+            public string AlbumArtUrl { get; set; }
+            public bool Deleted { get; set; }
+            public string Url { get; set; }
+            public object CreationDate { get; set; }
+            public int PlayCount { get; set; }
+            public int Bitrate { get; set; }
+            public int Rating { get; set; }
+            public string Comment { get; set; }
 		}
 		public class GoogleMusicArtist
 		{

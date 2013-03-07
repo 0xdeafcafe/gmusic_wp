@@ -177,7 +177,7 @@
 											<Grid VerticalAlignment="Bottom" HorizontalAlignment="Left">
 												<TextBlock Text="{Binding Title}" Margin="0" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Segoe WP" FontSize="20" />
 											</Grid>
-											<Image Margin="-13" Source="{Binding Path=AlbumArt, Converter={StaticResource IValueImageConverter}}" />
+											<Image Margin="-13" Source="{Binding Path=AlbumArtUrl, Converter={StaticResource IValueImageConverter}}" />
 										</Grid>
 									</Button>
 								</DataTemplate>

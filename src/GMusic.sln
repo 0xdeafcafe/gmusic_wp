@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{4B84C285-2
 		To Do.md = To Do.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMusic.Agent.8", "GMusic.Agent.8\GMusic.Agent.8.csproj", "{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,18 @@ Global
 		{A395BEEB-CB62-44C9-8315-2A0C67960D68}.Release|x86.ActiveCfg = Release|x86
 		{A395BEEB-CB62-44C9-8315-2A0C67960D68}.Release|x86.Build.0 = Release|x86
 		{A395BEEB-CB62-44C9-8315-2A0C67960D68}.Release|x86.Deploy.0 = Release|x86
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Debug|ARM.Build.0 = Debug|ARM
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Debug|x86.ActiveCfg = Debug|x86
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Debug|x86.Build.0 = Debug|x86
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Release|ARM.ActiveCfg = Release|ARM
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Release|ARM.Build.0 = Release|ARM
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Release|x86.ActiveCfg = Release|x86
+		{F96E7773-7A13-4D7A-A206-AFA4FD0CAB26}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
