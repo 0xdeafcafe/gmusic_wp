@@ -99,8 +99,11 @@
       <DependentUpon>GooglePlay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\IValueBrowseSongSplitter.cs" />
+    <Compile Include="Converters\IValueConverterMillisecondsToFriendly.cs" />
     <Compile Include="Converters\IValueImageConverter.cs" />
     <Compile Include="Converters\IValueLazyGroupDescriptor.cs" />
+    <Compile Include="Converters\IValueTimespanToFriendly.cs" />
+    <Compile Include="Converters\IValueTimespanToMilliseconds.cs" />
     <Compile Include="Converters\IValueToLowercase.cs" />
     <Compile Include="Converters\IValueToUppercase.cs" />
     <Compile Include="Helpers\AlphaKeyGroup.cs" />

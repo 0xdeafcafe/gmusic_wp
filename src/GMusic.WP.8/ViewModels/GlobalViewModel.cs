@@ -10,11 +10,28 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Phone.BackgroundAudio;
 using GMusic.WP._8.Helpers;
+using System.Windows.Threading;
 
 namespace GMusic.WP._8.ViewModels
 {
 	public class GlobalViewModel : INotifyPropertyChanged
 	{
+        private DispatcherTimer playPosition = new DispatcherTimer();
+
+        public GlobalViewModel()
+        {
+            playPosition.Interval = new TimeSpan(0, 0, 1);
+            playPosition.Tick += (sender, args) =>
+                                     {
+                                         NotifyPropertyChanged("Player");
+                                         NotifyPropertyChanged("NowPlayingInfomation");
+
+                                         playPosition.Start();
+                                     };
+            playPosition.Start();
+
+        }
+
 		private ObservableCollection<Models.GoogleMusicSong> _allSongs = new ObservableCollection<Models.GoogleMusicSong>();
 		public ObservableCollection<Models.GoogleMusicSong> AllSongs
 		{
@@ -117,11 +134,15 @@ namespace GMusic.WP._8.ViewModels
             get { return _nowPlaying; }
             set
             {
-                _nowPlaying = value; 
+                _nowPlaying = value;
                 NotifyPropertyChanged("NowPlaying");
+                NotifyPropertyChanged("NowPlayingInfomation");
             }
 	    }
-
+	    public Models.GoogleMusicSong NowPlayingInfomation
+	    {
+            get { return NowPlaying[0]; }
+	    }
 
 	    public IList<Models.GoogleMusicAlbum> NewAlbums
 		{

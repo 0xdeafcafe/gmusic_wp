@@ -20,8 +20,9 @@
     <phone:PhoneApplicationPage.Resources>
         <!-- Converters -->
         <converters:IValueImageConverter x:Key="IValueImageConverter" />
-        <converters:IValueToLowercase x:Key="IValueToLowercase" />
-        <converters:IValueLazyGroupDescriptor x:Key="IValueLazyGroupDescriptor" />
+        <converters:IValueTimespanToFriendly x:Key="IValueTimespanToFriendly" />
+        <converters:IValueConverterMillisecondsToFriendly x:Key="IValueConverterMillisecondsToFriendly" />
+        <converters:IValueTimespanToMilliseconds x:Key="IValueTimespanToMilliseconds" />
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -55,8 +56,8 @@
 			</StackPanel>
 
 			<StackPanel Grid.Row="2">
-				<TextBlock Text="Muse" Foreground="White" FontSize="42.667" />
-				<TextBlock Text="The Resistance" Foreground="White" FontSize="33.333" />
+                <TextBlock Text="{Binding Path=NowPlayingInfomation.Title}" Foreground="White" FontSize="42.667" />
+                <TextBlock Text="{Binding Path=NowPlayingInfomation.Album}" Foreground="White" FontSize="33.333" />
 			</StackPanel>
             
             <Grid Grid.Row="4">
@@ -92,10 +93,16 @@
                         <ColumnDefinition Width="120" />
                     </Grid.ColumnDefinitions>
                     
-                    <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Value="20" Style="{StaticResource MusicTimeline}"/>
+                    <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Style="{StaticResource MusicTimeline}"
+                                 Minimum="0" Maximum="{Binding Path=NowPlayingInfomation.DurationMillis}"
+                                 Value="{Binding Path=Player.Position, Converter={StaticResource IValueTimespanToMilliseconds}}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="0:12" Foreground="White" HorizontalAlignment="Left" FontSize="14" />
-                    <TextBlock Grid.Row="2" Grid.Column="2" Text="3:23" Foreground="White" HorizontalAlignment="Right" FontSize="14" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" 
+                               Text="{Binding Path=Player.Position, Converter={StaticResource IValueTimespanToFriendly}}" 
+                               Foreground="White" HorizontalAlignment="Left" FontSize="14" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" 
+                               Text="{Binding Path=NowPlayingInfomation.DurationMillis, Converter={StaticResource IValueConverterMillisecondsToFriendly}}" 
+                               Foreground="White" HorizontalAlignment="Right" FontSize="14" />
                 </Grid>
             </Grid>
         </Grid>

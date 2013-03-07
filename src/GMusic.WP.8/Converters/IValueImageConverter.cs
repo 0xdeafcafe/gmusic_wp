@@ -12,8 +12,17 @@ namespace GMusic.WP._8.Converters
 			try
 			{
                 var output = (string)value;
+
+                // Fix protocol
                 if (output.StartsWith("//"))
                     output = output.Insert(0, "https:");
+
+                // Fix sizing
+                if (output.Contains("="))
+                {
+                    var indexOfEnd = output.LastIndexOf('=');
+                    output = output.Remove(indexOfEnd) + "=w260";
+                }
 
 				return new BitmapImage(new Uri(output));
 			}
