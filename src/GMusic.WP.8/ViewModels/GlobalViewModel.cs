@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Threading.Tasks;
@@ -165,16 +166,25 @@ namespace GMusic.WP._8.ViewModels
 
                 NowPlaying[0].Url = derp.URL;
             }
+
+            BeginPlay();
+        }
+
+        private void BeginPlay()
+        {
+            var song = NowPlaying[0];
+
+            Player.Track = new AudioTrack(new Uri(song.Url, UriKind.Absolute), song.Title, song.Artist, song.Album, new Uri(song.AlbumArtUrl, UriKind.Absolute));
+            Player.Play();
         }
 
         public Task<Models.GoogleMusicSongUrl> DownloadSongUrl(Models.GoogleMusicSong song)
         {
             var tcs = new TaskCompletionSource<Models.GoogleMusicSongUrl>();
 
-            if (song.Url != null)
+            if (!String.IsNullOrEmpty(song.Url.Trim()))
             {
                 var url = new Uri(song.Url);
-                var query = url.Query;
                 if (!Time.Helpers.HasPassed(new QueryString(url)["expire"]))
                 {
                     tcs.SetResult(new Models.GoogleMusicSongUrl
@@ -185,18 +195,29 @@ namespace GMusic.WP._8.ViewModels
                 }
             }
             App.ApiManager.OnError += tcs.SetException;
-            App.ApiManager.OnGetSongURL += tcs.SetResult;
+            App.ApiManager.OnGetSongURL += songurl =>
+                                               {
+                                                   song.Url = songurl.URL;
+                                                   AddUrlToAllSongs(song);
+                                                   tcs.SetResult(songurl);
+                                               };
             App.ApiManager.GetSongURL(song.Id);
 
             return tcs.Task;
         }
-        public void AddUrl(Models.GoogleMusicSong song)
+        public void AddUrlToAllSongs(Models.GoogleMusicSong song)
         {
-            
+            for(var i = 0; i < AllSongs.Count(); i++)
+            {
+                if (AllSongs[i].Id == song.Id) continue;
+
+                AllSongs[i].Url = song.Url;
+                return;
+            }
         }
 		public Models.GoogleMusicArtist GetArtistFromString(string artistString)
 		{
-			return _allArtists.FirstOrDefault(artistT => artistT.Artist.ToString().ToLower().Trim() == artistString.ToLower().Trim());
+			return _allArtists.FirstOrDefault(artistT => artistT.Artist.ToString(CultureInfo.InvariantCulture).ToLower().Trim() == artistString.ToLower().Trim());
 		}
 		#endregion
 
