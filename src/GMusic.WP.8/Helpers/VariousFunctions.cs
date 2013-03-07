@@ -64,6 +64,7 @@ namespace GMusic.WP._8.Helpers
 			Browse,
 			BrowsePlaylists,
 			MusicHub,
+            Play,
 			ViewAlbum,
 			ViewArtist,
 			ViewGenre,
@@ -95,7 +96,10 @@ namespace GMusic.WP._8.Helpers
 					break;
 				case Page.MusicHub:
 					pageFriendly += "Authorized/MusicHub";
-					break;
+                    break;
+                case Page.Play:
+                    pageFriendly += "Authorized/Play";
+                    break;
 				case Page.ViewAlbum:
 					pageFriendly += "Authorized/ViewAlbum";
 					break;

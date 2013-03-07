@@ -11,7 +11,11 @@ namespace GMusic.WP._8.Converters
 		{
 			try
 			{
-				return new BitmapImage(new Uri((string)value));
+                var output = (string)value;
+                if (output.StartsWith("//"))
+                    output = output.Insert(0, "https:");
+
+				return new BitmapImage(new Uri(output));
 			}
 			catch
 			{

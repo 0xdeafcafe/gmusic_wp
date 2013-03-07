@@ -6,13 +6,23 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    xmlns:telerikDataControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
+	xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives" 
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:converters="clr-namespace:GMusic.WP._8.Converters" FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
 	shell:SystemTray.BackgroundColor="#FF333333">
+
+    <phone:PhoneApplicationPage.Resources>
+        <!-- Converters -->
+        <converters:IValueImageConverter x:Key="IValueImageConverter" />
+        <converters:IValueToLowercase x:Key="IValueToLowercase" />
+        <converters:IValueLazyGroupDescriptor x:Key="IValueLazyGroupDescriptor" />
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
@@ -23,7 +33,7 @@
 			</LinearGradientBrush>
 		</Grid.Background>
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Margin="25,0,25,0">
+        <Grid x:Name="ContentPanel" Margin="25,0,0,0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="125" />
 				<RowDefinition Height="10" />
@@ -59,7 +69,16 @@
                     <RowDefinition Height="266" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <Image Grid.Column="0" Grid.Row="0" Source="/Assets/Placeholder/unnamed.jpg" />
+                <telerikPrimitives:RadSlideView Margin="-25,0,0,0" Grid.ColumnSpan="3" Grid.Row="0" ItemsSource="{Binding NowPlaying}"
+                                                ItemRealizationMode="Default" HorizontalContentAlignment="Left" AdjacentItemsPreviewMode="Next">
+                    <telerikPrimitives:RadSlideView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="256" Height="256" Margin="25,0,0,0" HorizontalAlignment="Left">
+                                <Image Source="{Binding Path=AlbumArtUrl, Converter={StaticResource IValueImageConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </telerikPrimitives:RadSlideView.ItemTemplate>
+                </telerikPrimitives:RadSlideView>
                 
                 <Grid Grid.Column="0" Grid.Row="1">
                     <Grid.RowDefinitions>

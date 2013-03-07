@@ -143,6 +143,7 @@
 							<TextBlock Text="collection" Foreground="#FF808285" FontSize="61" FontFamily="Segoe WP SemiLight" />
 							
 							<StackPanel Margin="0,30,0,0">
+                                <Button x:Name="btnNowPlaying" Content="now playing" Style="{StaticResource HubCollectionButton}" Click="btnNowPlaying_Click" />
 								<Button x:Name="btnMusicCollection" Content="music" Style="{StaticResource HubCollectionButton}" Click="btnMusicCollection_Click" />
 								<Button x:Name="btnPlaylistCollection" Content="playlists" Style="{StaticResource HubCollectionButton}" Click="btnPlaylistCollection_Click" />
 							</StackPanel>

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Phone.BackgroundAudio;
 using GMusic.WP._8.Helpers;
-using System.Net;
 
 namespace GMusic.WP._8.ViewModels
 {
@@ -26,9 +25,9 @@ namespace GMusic.WP._8.ViewModels
 				NotifyPropertyChanged("AllSongs");
 				Save("all_songs");
 
-                if (NowPlaying == null)
+                if (NowPlaying.Count <= 0)
                 {
-                    NowPlaying = AllSongs.Take(10).ToList();
+                    NowPlaying = new ObservableCollection<Models.GoogleMusicSong>(AllSongs.OrderByDescending(x => x.Title).Take(10).ToList());
                     NextTrack();
                 }
 
@@ -112,7 +111,16 @@ namespace GMusic.WP._8.ViewModels
 	    {
             get { return BackgroundAudioPlayer.Instance; }
 	    }
-        public IList<Models.GoogleMusicSong> NowPlaying { get; set; }
+        private ObservableCollection<Models.GoogleMusicSong> _nowPlaying = new ObservableCollection<Models.GoogleMusicSong>();
+        public ObservableCollection<Models.GoogleMusicSong> NowPlaying
+	    {
+            get { return _nowPlaying; }
+            set
+            {
+                _nowPlaying = value; 
+                NotifyPropertyChanged("NowPlaying");
+            }
+	    }
 
 
 	    public IList<Models.GoogleMusicAlbum> NewAlbums
@@ -160,18 +168,23 @@ namespace GMusic.WP._8.ViewModels
         {
             NowPlaying.Move(ListExtensions.Destination.End);
 
+            await BeginPlay();
+        }
+        public async void PreviousTrack()
+        {
+            NowPlaying.Move(ListExtensions.Destination.Start);
+
+            await BeginPlay();
+        }
+
+        private async Task BeginPlay()
+        {
             if (string.IsNullOrEmpty(NowPlaying[0].Url))
             {
                 var derp = await DownloadSongUrl(NowPlaying[0]);
 
                 NowPlaying[0].Url = derp.URL;
             }
-
-            BeginPlay();
-        }
-
-        private void BeginPlay()
-        {
             var song = NowPlaying[0];
 
             Player.Track = new AudioTrack(new Uri(song.Url, UriKind.Absolute), song.Title, song.Artist, song.Album, new Uri(song.AlbumArtUrl, UriKind.Absolute));

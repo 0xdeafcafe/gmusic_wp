@@ -16,6 +16,10 @@ namespace GMusic.WP._8.Pages.Authorized
 		}
 
 		// collection
+        private void btnNowPlaying_Click(object sender, RoutedEventArgs e)
+        {
+            VariousFunctions.NavigateToPage(VariousFunctions.Page.Play);
+        }
 		private void btnMusicCollection_Click(object sender, RoutedEventArgs e)
 		{
 			VariousFunctions.NavigateToPage(VariousFunctions.Page.Browse);

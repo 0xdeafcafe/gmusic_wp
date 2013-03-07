@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-
-namespace GMusic.WP._8.Pages.Authorized
+﻿namespace GMusic.WP._8.Pages.Authorized
 {
-	public partial class Play : PhoneApplicationPage
+	public partial class Play
 	{
 		public Play()
 		{
 			InitializeComponent();
+
+		    DataContext = App.ViewModel;
 		}
 	}
 }
