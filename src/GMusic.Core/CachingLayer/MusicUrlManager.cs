@@ -50,63 +50,32 @@ namespace MVPTracker.Core.CachingLayer
             return table;
         }
 
-        public KeyValuePair<bool, string> GetCacheData(string leagueCode, string positionCode)
+        public string GetCacheData(string songId)
         {
-            // Get Data from DB
-            var playersCacheInDb = from StorageCacheItem entry in StorageCache
-                                   where entry.PositionCode == positionCode && entry.LeagueCode == leagueCode
-                                   select entry;
-            var cachedPlayersData = new List<StorageCacheItem>();
-            try { cachedPlayersData = new List<StorageCacheItem>(playersCacheInDb); }
-            catch (Exception) { }
+            var entry = StorageCache.First(item => item.SongId == songId && item.Expires < DateTime.Now);
 
-            // Get Local Data
-            var currentTime = DateTime.Now;
-            var internetConnection = VariousFunctions.CheckInternetConnection();
-
-            // Check if there are no entries
-            if (cachedPlayersData.Count == 0)
-            {
-                // no data
-                return new KeyValuePair<bool, string>(false, null);
-            }
-
-            // Check for Non-Expired Data
-            if (cachedPlayersData[0].SongId.Ticks >= currentTime.Ticks)
-                return new KeyValuePair<bool, string>(true, cachedPlayersData[0].Json);
-
-            // Data has expired
-            return internetConnection ?
-                    new KeyValuePair<bool, string>(false, cachedPlayersData[0].Json) :
-                    new KeyValuePair<bool, string>(true, cachedPlayersData[0].Json);
+            return entry == null ? null : entry.Url;
         }
-
-        public void SetCacheData(string Id, string Url, DateTime expires)
+        public void SetCacheData(string songId, string url, DateTime expires)
         {
-            // do it now, now.
+            #region Read And Delete All Entries
+            var cachedDataInDb = StorageCache.Where(t => t.SongId == songId).ToList();
+            var cachedDataData = new List<UrlItem>();
+            try { cachedDataData = new List<UrlItem>(cachedDataInDb); } catch (Exception) { }
+            StorageCache.DeleteAllOnSubmit(cachedDataData);
+            #endregion
+
+            #region Add New Data
+            StorageCache.InsertOnSubmit(new UrlItem
+                                            {
+                                                Expires = expires,
+                                                SongId = songId,
+                                                Url = url
+                                            });
+            #endregion
+
+            Save();
         }
-        //{
-        //    // Get And Delete Old Cached Data from DB
-        //    #region Read And Delete All Entries
-        //    var cachedDataInDb = StorageCache.
-        //        Where(t => t.LeagueCode.ToString() == leagueCode && t.PositionCode.ToString() == positionCode).ToList();
-        //    var cachedDataData = new List<StorageCacheItem>();
-        //    try { cachedDataData = new List<StorageCacheItem>(cachedDataInDb); }
-        //    catch (Exception) { }
-        //    StorageCache.DeleteAllOnSubmit(cachedDataData);
-        //    #endregion
-
-        //    StorageCache.InsertOnSubmit(new StorageCacheItem
-        //    {
-        //        Id = Environment.TickCount,
-        //        SongId = expireTime,
-        //        LeagueCode = leagueCode,
-        //        PositionCode = positionCode,
-        //        Json = json,
-        //    });
-
-        //    Save();
-        //}
 
         public void Save()
         {
@@ -136,13 +105,13 @@ namespace MVPTracker.Core.CachingLayer
         [Column(Name = "SongId", AutoSync = AutoSync.OnInsert)]
         public string SongId
         {
-            get { return _url; }
+            get { return _songId; }
             set
             {
-                if (_url == value) return;
+                if (_songId == value) return;
 
                 NotifyPropertyChanging("SongId");
-                _url = value;
+                _songId = value;
                 NotifyPropertyChanged("SongId");
             }
         }

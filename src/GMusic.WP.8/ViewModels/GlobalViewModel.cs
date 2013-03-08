@@ -42,12 +42,6 @@ namespace GMusic.WP._8.ViewModels
 				NotifyPropertyChanged("AllSongs");
 				Save("all_songs");
 
-                if (NowPlaying.Count <= 0)
-                {
-                    NowPlaying = new ObservableCollection<Models.GoogleMusicSong>(AllSongs.OrderByDescending(x => x.Title).Take(10).ToList());
-                    NextTrack();
-                }
-
 			    #region Albums
 				AllAlbums.Clear();
 				foreach (var song in _allSongs.Where(song => !String.IsNullOrEmpty(song.Title.Trim()) && !String.IsNullOrEmpty(song.Album.Trim())))
@@ -131,16 +125,6 @@ namespace GMusic.WP._8.ViewModels
                 return BackgroundAudioPlayer.Instance; 
             }
 	    }
-        void Instance_PlayStateChanged(object sender, EventArgs e)
-        {
-            var player = (BackgroundAudioPlayer) sender;
-
-            if (player.PlayerState == PlayState.TrackEnded)
-            {
-                NextTrack();
-            }
-        }
-
         private ObservableCollection<Models.GoogleMusicSong> _nowPlaying = new ObservableCollection<Models.GoogleMusicSong>();
         public ObservableCollection<Models.GoogleMusicSong> NowPlaying
 	    {
@@ -206,19 +190,6 @@ namespace GMusic.WP._8.ViewModels
 		}
 
 		#region Functions
-        public async void NextTrack()
-        {
-            NowPlaying.Move(ListExtensions.Destination.End);
-
-            await BeginPlay();
-        }
-        public async void PreviousTrack()
-        {
-            NowPlaying.Move(ListExtensions.Destination.Start);
-
-            await BeginPlay();
-        }
-
         private async Task BeginPlay()
         {
             if (string.IsNullOrEmpty(NowPlaying[0].Url))
@@ -234,8 +205,6 @@ namespace GMusic.WP._8.ViewModels
             Player.Track = audioTrack;
 
             Player.Play();
-
-            BackgroundAudioPlayer.Instance.PlayStateChanged += Instance_PlayStateChanged;
         }
 
         public Task<Models.GoogleMusicSongUrl> DownloadSongUrl(Models.GoogleMusicSong song)

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Phone.BackgroundAudio;
-using System.Collections.Generic;
 using GMusic.API;
+using MVPTracker.Core.CachingLayer;
+using GMusic.Agent._8.Resources;
+using System.Windows.Threading;
 
 namespace GMusic.Agent._8
 {
@@ -21,10 +24,96 @@ namespace GMusic.Agent._8
             {
                 Application.Current.UnhandledException += UnhandledException;
             });
+
+            // Initalize IsolatedStorage
+            IsolatedStorage = new IsolatedStorage();
+            IsolatedStorage.Load();
+
+            // Initalize IsolatedScheduler
+            IsolatedScheduler = new IsolatedScheduler();
+            IsolatedScheduler.Load();
+
+            // Initalize Api Manager
+            ApiManager = new Manager();
+            
+            // Login
+            Login();
+
+            // Schedule Timer
+            ScheduleTimer = new DispatcherTimer();
+            ScheduleTimer.Interval = new TimeSpan(0, 0, 1);
+            ScheduleTimer.Tick += ScheduleTimer_Action;
         }
 
-        private static int _currentTrackNumber = 0;
-        public List<Models.GoogleMusicSong> Playlist = new List<Models.GoogleMusicSong>();
+        #region Functions
+        private static void ScheduleTimer_Action(object sender, EventArgs eventArgs)
+        {
+            IsolatedScheduler.Load();
+
+            if (IsLoggedIn)
+            {
+                if (!IsolatedSchedulerManager.IsPlaying && !IsolatedSchedulerManager.IsWaitingForSongUrl)
+                {
+                    // oh no, start playin son
+                    PlaySong(0);
+                }
+            }
+        }
+
+        public static async Task<string> Login()
+        {
+            var tcs = new TaskCompletionSource<string>();
+
+            ApiManager.OnError += tcs.SetException;
+            ApiManager.Login(IsolatedStorage.GoogleAuthToken);
+            ApiManager.OnLoginComplete += (sender, args) =>
+                                              {
+                                                  IsLoggedIn = true;
+                                                  tcs.SetResult("done");
+                                              };
+            
+            return tcs.Task.Result;
+        }
+        #endregion
+
+        #region PlaylistModification
+        public static void PlaySong(int index)
+        {
+            IsolatedSchedulerManager.NowPlayingIndex = index;
+        }
+        #endregion
+
+        public static DispatcherTimer ScheduleTimer;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static bool IsLoggedIn = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IsolatedScheduler IsolatedScheduler;
+        public static IsolatedScheduler.Manager IsolatedSchedulerManager
+        {
+            get { return IsolatedScheduler.BackgroundManager; }
+            set { IsolatedScheduler.BackgroundManager = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IsolatedStorage IsolatedStorage;
+
+        /// <summary>
+        /// Provides a pretty chill place to store Cached Url's
+        /// </summary>
+        public static MusicUrlManager UrlManager;
+
+        /// <summary>
+        /// Provides a pretty chill place to store Cached Url's
+        /// </summary>
+        public static Manager ApiManager;
 
         /// Code to execute on Unhandled Exceptions
         private static void UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
@@ -103,16 +192,6 @@ namespace GMusic.Agent._8
         /// </remarks>
         protected override void OnUserAction(BackgroundAudioPlayer player, AudioTrack track, UserAction action, object param)
         {
-            switch (track.Title)
-            {
-                case "adding_new_playlist":
-
-                    break;
-                case "updating_existing_playlist":
-
-                    break;
-            }
-
             switch (action)
             {
                 case UserAction.Play:
@@ -150,33 +229,6 @@ namespace GMusic.Agent._8
 
             NotifyComplete();
         }
-
-        #region TrackSelection
-        public void PlayNextTrack(BackgroundAudioPlayer player)
-        {
-            if (++_currentTrackNumber >= Playlist.Count)
-            {
-                _currentTrackNumber = 0;
-            }
-
-            PlayTrack(player);
-        }
-        public void PlayPreviousTrack(BackgroundAudioPlayer player)
-        {
-            if (--_currentTrackNumber < 0)
-            {
-                _currentTrackNumber = Playlist.Count - 1;
-            }
-
-            PlayTrack(player);
-        }
-        public void PlayTrack(BackgroundAudioPlayer player)
-        {
-            // Sets the track to play. When the TrackReady state is received, 
-            // playback begins from the OnPlayStateChanged handler.
-            //player.Track = new AudioTrack(new Uri(Playlist[_currentTrackNumber], 
-        }
-        #endregion
 
         /// <summary>
         /// Called whenever there is an error with playback, such as an AudioTrack not downloading correctly

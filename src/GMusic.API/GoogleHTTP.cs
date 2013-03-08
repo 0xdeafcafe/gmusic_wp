@@ -34,6 +34,11 @@ namespace GMusic.API
 			}
 		}
 
+        public bool IsAuthenticated()
+        {
+            return (AuthroizationToken != null);
+        }
+
 		public HttpWebRequest UploadDataAsync(Uri address, FormBuilder form, RequestCompletedEventHandler complete)
 		{
 			return UploadDataAsync(address, form.ContentType, form.GetBytes(), complete);
