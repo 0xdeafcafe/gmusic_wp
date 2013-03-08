@@ -101,6 +101,12 @@
     <Compile Include="..\GMusic.Core\Helpers\UnixTimestamp.cs">
       <Link>Helpers\UnixTimestamp.cs</Link>
     </Compile>
+    <Compile Include="..\GMusic.Core\Resources\IsolatedScheduler.cs">
+      <Link>Resources\IsolatedScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\GMusic.Core\Resources\IStorage.cs">
+      <Link>Resources\IStorage.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -163,7 +169,6 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\IsolatedStorage.cs" />
-    <Compile Include="Resources\IStorage.cs" />
     <Compile Include="ViewModels\GlobalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

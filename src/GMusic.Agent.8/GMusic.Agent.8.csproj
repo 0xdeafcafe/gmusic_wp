@@ -95,11 +95,15 @@
     <Compile Include="..\GMusic.Core\Helpers\UnixTimestamp.cs">
       <Link>Helpers\UnixTimestamp.cs</Link>
     </Compile>
+    <Compile Include="..\GMusic.Core\Resources\IsolatedScheduler.cs">
+      <Link>Resources\IsolatedScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\GMusic.Core\Resources\IStorage.cs">
+      <Link>Resources\IStorage.cs</Link>
+    </Compile>
     <Compile Include="AudioPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\IsolatedScheduler.cs" />
     <Compile Include="Resources\IsolatedStorage.cs" />
-    <Compile Include="Resources\IStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GMusic.API\GMusic.API.csproj">

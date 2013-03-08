@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿#if WINDOWS_PHONE
+using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using GMusic.API;
 using Newtonsoft.Json;
 
-namespace GMusic.Agent._8.Resources
+namespace GMusic.Core.Resources
 {
     public class IsolatedScheduler : IStorage
 	{
@@ -68,3 +69,4 @@ namespace GMusic.Agent._8.Resources
         #endregion
     }
 }
+#endif

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
-using GMusic.Core.Helpers;
+using GMusic.Core.Resources;
 using Microsoft.Phone.BackgroundAudio;
 using GMusic.API;
 using MVPTracker.Core.CachingLayer;

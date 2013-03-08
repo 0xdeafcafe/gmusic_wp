@@ -49,12 +49,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GMusic.Core\GMusic.Core.csproj">
-      <Project>{f7642c66-b9ac-4259-8601-cc2bb9c2f12e}</Project>
-      <Name>GMusic.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Target Name="_SetFullFrameworkFolderToProfile" AfterTargets="GetReferenceAssemblyPaths">

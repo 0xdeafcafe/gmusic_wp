@@ -1,4 +1,5 @@
 ﻿using System.IO.IsolatedStorage;
+using GMusic.Core.Resources;
 
 namespace GMusic.Agent._8.Resources
 {

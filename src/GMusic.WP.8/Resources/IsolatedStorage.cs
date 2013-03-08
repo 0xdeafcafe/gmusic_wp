@@ -1,5 +1,5 @@
 ﻿using System.IO.IsolatedStorage;
-using GMusic.API;
+using GMusic.Core.Resources;
 
 namespace GMusic.WP._8.Resources
 {
