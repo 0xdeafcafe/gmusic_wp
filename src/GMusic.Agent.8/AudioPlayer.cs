@@ -53,7 +53,8 @@ namespace GMusic.Agent._8
 
             if (IsLoggedIn)
             {
-                if (!IsolatedSchedulerManager.IsPlaying && !IsolatedSchedulerManager.IsWaitingForSongUrl)
+                if (!IsolatedSchedulerManager.IsPlaying && !IsolatedSchedulerManager.IsWaitingForSongUrl &&
+                    IsolatedSchedulerManager.NowPlaying.Count > 0)
                 {
                     // oh no, start playin son
                     PlaySong(0);
