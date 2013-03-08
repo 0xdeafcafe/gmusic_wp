@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
+using GMusic.Core.Helpers;
 using Microsoft.Phone.BackgroundAudio;
 using GMusic.API;
 using MVPTracker.Core.CachingLayer;
@@ -60,6 +61,29 @@ namespace GMusic.Agent._8
             }
         }
 
+        public static Task<String> DownloadSongUrl(Models.GoogleMusicSong song)
+        {
+            IsolatedSchedulerManager.IsWaitingForSongUrl = true;
+            var tcs = new TaskCompletionSource<String>();
+
+            // Check song url already exists
+            var cacheUrl = UrlManager.GetCacheData(song.Id);
+            if (!String.IsNullOrEmpty(cacheUrl))
+            {
+                // woop, still have a url in cache, return that
+                tcs.SetResult(cacheUrl);
+            }
+            else
+            {
+                ApiManager.OnError += tcs.SetException;
+                ApiManager.OnGetSongURL += songurl => tcs.SetResult(songurl.URL);
+                ApiManager.GetSongURL(song.Id);
+            }
+
+            IsolatedSchedulerManager.IsWaitingForSongUrl = false;
+            return tcs.Task;
+        }
+
         public static async Task<string> Login()
         {
             var tcs = new TaskCompletionSource<string>();
@@ -77,12 +101,53 @@ namespace GMusic.Agent._8
         #endregion
 
         #region PlaylistModification
-        public static void PlaySong(int index)
+        public static void PlaySong()
+        {
+            PlaySong(IsolatedSchedulerManager.NowPlayingIndex);
+        }
+        public async static void PlaySong(int index)
         {
             IsolatedSchedulerManager.NowPlayingIndex = index;
+
+            var song = IsolatedSchedulerManager.NowPlaying[IsolatedSchedulerManager.NowPlayingIndex];
+            var player = BackgroundAudioPlayer.Instance;
+            var songUrl = await DownloadSongUrl(song);
+            player.Track = new AudioTrack(new Uri(songUrl, UriKind.Absolute),
+                song.Title, 
+                song.Artist, 
+                song.Album, 
+                new Uri(song.AlbumArtUrl, UriKind.Absolute));
+            player.Play();
+
+            IsolatedSchedulerManager.IsPlaying = true;
         }
+
+        public static void PauseSong()
+        {
+            var player = BackgroundAudioPlayer.Instance;
+            if (!player.CanPause) return;
+            player.Pause();
+            IsolatedSchedulerManager.IsPlaying = false;
+        }
+        public static void ResumeSong()
+        {
+            var player = BackgroundAudioPlayer.Instance;
+            player.Play();
+            IsolatedSchedulerManager.IsPlaying = true;
+        }
+
+        public static void NextSong()
+        {
+        }
+        public static void PreviousSong()
+        {
+        }
+
         #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static DispatcherTimer ScheduleTimer;
 
         /// <summary>

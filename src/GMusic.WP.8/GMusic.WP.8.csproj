@@ -95,6 +95,12 @@
     <Compile Include="..\GMusic.Core\CachingLayer\MusicUrlManager.cs">
       <Link>CachingLayer\MusicUrlManager.cs</Link>
     </Compile>
+    <Compile Include="..\GMusic.Core\Helpers\QueryString.cs">
+      <Link>Helpers\QueryString.cs</Link>
+    </Compile>
+    <Compile Include="..\GMusic.Core\Helpers\UnixTimestamp.cs">
+      <Link>Helpers\UnixTimestamp.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -112,8 +118,6 @@
     <Compile Include="Helpers\AlphaKeyGroup.cs" />
     <Compile Include="Helpers\CharCompare.cs" />
     <Compile Include="Helpers\IListExtensions.cs" />
-    <Compile Include="Helpers\QueryString.cs" />
-    <Compile Include="Helpers\UnixTimestamp.cs" />
     <Compile Include="Helpers\VariousFunctions.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Pages\About.xaml.cs">

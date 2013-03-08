@@ -39,6 +39,8 @@
     <Compile Include="CachingLayer\MusicUrlManager.cs" />
     <Compile Include="Helpers\ConverterCleanup.cs" />
     <Compile Include="Helpers\HttpExtensions.cs" />
+    <Compile Include="Helpers\QueryString.cs" />
+    <Compile Include="Helpers\UnixTimestamp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -89,6 +89,12 @@
     <Compile Include="..\GMusic.Core\CachingLayer\MusicUrlManager.cs">
       <Link>CachingLayer\MusicUrlManager.cs</Link>
     </Compile>
+    <Compile Include="..\GMusic.Core\Helpers\QueryString.cs">
+      <Link>Helpers\QueryString.cs</Link>
+    </Compile>
+    <Compile Include="..\GMusic.Core\Helpers\UnixTimestamp.cs">
+      <Link>Helpers\UnixTimestamp.cs</Link>
+    </Compile>
     <Compile Include="AudioPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\IsolatedScheduler.cs" />

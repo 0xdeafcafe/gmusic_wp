@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GMusic.WP._8.Helpers
+namespace GMusic.Core.Helpers
 {
     public static class Time
     {

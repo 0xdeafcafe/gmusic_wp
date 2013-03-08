@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Threading.Tasks;
 using GMusic.API;
 using System;
 using System.ComponentModel;
@@ -190,60 +189,6 @@ namespace GMusic.WP._8.ViewModels
 		}
 
 		#region Functions
-        private async Task BeginPlay()
-        {
-            if (string.IsNullOrEmpty(NowPlaying[0].Url))
-            {
-                var derp = await DownloadSongUrl(NowPlaying[0]);
-
-                NowPlaying[0].Url = derp.URL;
-            }
-            var song = NowPlaying[0];
-            var audioTrack = new AudioTrack(new Uri(song.Url, UriKind.Absolute), song.Title, song.Artist, song.Album,
-                                            new Uri(song.AlbumArtUrl, UriKind.Absolute));
-            audioTrack.Tag = song.Id;
-            Player.Track = audioTrack;
-
-            Player.Play();
-        }
-
-        public Task<Models.GoogleMusicSongUrl> DownloadSongUrl(Models.GoogleMusicSong song)
-        {
-            var tcs = new TaskCompletionSource<Models.GoogleMusicSongUrl>();
-
-            if (!String.IsNullOrEmpty(song.Url.Trim()))
-            {
-                var url = new Uri(song.Url);
-                if (!Time.Helpers.HasPassed(new QueryString(url)["expire"]))
-                {
-                    tcs.SetResult(new Models.GoogleMusicSongUrl
-                                      {
-                                          URL = song.Url
-                                      });
-                    return tcs.Task;
-                }
-            }
-            App.ApiManager.OnError += tcs.SetException;
-            App.ApiManager.OnGetSongURL += songurl =>
-                                               {
-                                                   song.Url = songurl.URL;
-                                                   AddUrlToAllSongs(song);
-                                                   tcs.SetResult(songurl);
-                                               };
-            App.ApiManager.GetSongURL(song.Id);
-
-            return tcs.Task;
-        }
-        public void AddUrlToAllSongs(Models.GoogleMusicSong song)
-        {
-            for(var i = 0; i < AllSongs.Count(); i++)
-            {
-                if (AllSongs[i].Id == song.Id) continue;
-
-                AllSongs[i].Url = song.Url;
-                return;
-            }
-        }
 		public Models.GoogleMusicArtist GetArtistFromString(string artistString)
 		{
 			return _allArtists.FirstOrDefault(artistT => artistT.Artist.ToString(CultureInfo.InvariantCulture).ToLower().Trim() == artistString.ToLower().Trim());

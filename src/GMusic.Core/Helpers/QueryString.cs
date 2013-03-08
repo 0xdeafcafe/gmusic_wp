@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GMusic.WP._8.Helpers
+namespace GMusic.Core.Helpers
 {
     public class QueryString
     {
