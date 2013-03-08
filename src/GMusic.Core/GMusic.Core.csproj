@@ -36,6 +36,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CachingLayer\MusicUrlManager.cs" />
     <Compile Include="Helpers\ConverterCleanup.cs" />
     <Compile Include="Helpers\HttpExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

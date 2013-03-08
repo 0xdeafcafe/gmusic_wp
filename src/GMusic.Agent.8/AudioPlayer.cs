@@ -103,6 +103,16 @@ namespace GMusic.Agent._8
         /// </remarks>
         protected override void OnUserAction(BackgroundAudioPlayer player, AudioTrack track, UserAction action, object param)
         {
+            switch (track.Title)
+            {
+                case "adding_new_playlist":
+
+                    break;
+                case "updating_existing_playlist":
+
+                    break;
+            }
+
             switch (action)
             {
                 case UserAction.Play:

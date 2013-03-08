@@ -126,8 +126,21 @@ namespace GMusic.WP._8.ViewModels
 
 	    public BackgroundAudioPlayer Player
 	    {
-            get { return BackgroundAudioPlayer.Instance; }
+            get 
+            {
+                return BackgroundAudioPlayer.Instance; 
+            }
 	    }
+        void Instance_PlayStateChanged(object sender, EventArgs e)
+        {
+            var player = (BackgroundAudioPlayer) sender;
+
+            if (player.PlayerState == PlayState.TrackEnded)
+            {
+                NextTrack();
+            }
+        }
+
         private ObservableCollection<Models.GoogleMusicSong> _nowPlaying = new ObservableCollection<Models.GoogleMusicSong>();
         public ObservableCollection<Models.GoogleMusicSong> NowPlaying
 	    {
@@ -141,7 +154,15 @@ namespace GMusic.WP._8.ViewModels
 	    }
 	    public Models.GoogleMusicSong NowPlayingInfomation
 	    {
-            get { return NowPlaying[0]; }
+            get { return NowPlaying.First(song => song.Id == Player.Track.Tag); }
+	    }
+	    public int NowPlayingIndex
+	    {
+            get { return NowPlaying.FindIndex(song => song.Id == Player.Track.Tag); }
+            set
+            {
+                
+            }
 	    }
 
 	    public IList<Models.GoogleMusicAlbum> NewAlbums
@@ -207,9 +228,14 @@ namespace GMusic.WP._8.ViewModels
                 NowPlaying[0].Url = derp.URL;
             }
             var song = NowPlaying[0];
+            var audioTrack = new AudioTrack(new Uri(song.Url, UriKind.Absolute), song.Title, song.Artist, song.Album,
+                                            new Uri(song.AlbumArtUrl, UriKind.Absolute));
+            audioTrack.Tag = song.Id;
+            Player.Track = audioTrack;
 
-            Player.Track = new AudioTrack(new Uri(song.Url, UriKind.Absolute), song.Title, song.Artist, song.Album, new Uri(song.AlbumArtUrl, UriKind.Absolute));
             Player.Play();
+
+            BackgroundAudioPlayer.Instance.PlayStateChanged += Instance_PlayStateChanged;
         }
 
         public Task<Models.GoogleMusicSongUrl> DownloadSongUrl(Models.GoogleMusicSong song)

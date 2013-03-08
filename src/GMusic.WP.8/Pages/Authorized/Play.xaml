@@ -71,7 +71,8 @@
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
                 <telerikPrimitives:RadSlideView Margin="-25,0,0,0" Grid.ColumnSpan="3" Grid.Row="0" ItemsSource="{Binding NowPlaying}"
-                                                ItemRealizationMode="Default" HorizontalContentAlignment="Left" AdjacentItemsPreviewMode="Next">
+                                                ItemRealizationMode="Default" HorizontalContentAlignment="Left" AdjacentItemsPreviewMode="Next"
+                                                SelectedItem="{Binding Path=NowPlayingInfomation}">
                     <telerikPrimitives:RadSlideView.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="256" Height="256" Margin="25,0,0,0" HorizontalAlignment="Left">
