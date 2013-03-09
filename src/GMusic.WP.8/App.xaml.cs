@@ -21,17 +21,22 @@ namespace GMusic.WP._8
 		public static PhoneApplicationFrame RootFrame { get; private set; }
 
 		/// <summary>
-		/// The Google Music API Manager Class
+		/// The Google Music API Manager Class.
 		/// </summary>
 		public static Manager ApiManager;
 
 		/// <summary>
-		/// Provides a secure and stable location to store data
+		/// Provides a secure and stable location to store data.
 		/// </summary>
 		public static IsolatedStorage IsolatedStorage;
 
+        /// <summary>
+        /// Provides a place to exchange data with the Background Audio Agent, in a safe and STD free enviroment.
+        /// </summary>
+	    public static IsolatedSchedulerHelper IsolatedSchedulerHelper;
+
 		/// <summary>
-		/// The global view model of the application
+		/// The global view model of the application.
 		/// </summary>
 		public static GlobalViewModel ViewModel;
 
@@ -41,7 +46,7 @@ namespace GMusic.WP._8
 		public static bool IsTrial { get; private set; }
 
 		/// <summary>
-		/// Check the current license information for this application
+		/// Check the current license information for this application.
 		/// </summary>
 		private static void CheckLicense()
 		{

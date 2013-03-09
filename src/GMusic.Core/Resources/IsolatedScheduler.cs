@@ -23,6 +23,12 @@ namespace GMusic.Core.Resources
             {
                 NowPlaying = new List<Models.GoogleMusicSong>();
                 NowPlayingIndex = 0;
+
+                IsPlaying = false;
+                IsWaitingForSongUrl = false;
+                NeedsForcedPlay = false;
+
+                Action = Actions.NoAction;
             }
 
             public IList<Models.GoogleMusicSong> NowPlaying { get; set; }
@@ -31,6 +37,16 @@ namespace GMusic.Core.Resources
 
             public bool IsPlaying { get; set; }
             public bool IsWaitingForSongUrl { get; set; }
+            public bool NeedsForcedPlay { get; set; }
+
+            // Actions
+            public enum Actions
+            {
+                NoAction,
+                NewPlaylist,
+                UpdatedPlaylist
+            }
+            public Actions Action { get; set; }
         }
 
         #region I/O
